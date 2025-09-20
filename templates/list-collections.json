@@ -1,0 +1,160 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "disabled": true,
+      "settings": {
+        "title": "Tất cả loại rượu",
+        "sort": "date",
+        "image_ratio": "square",
+        "columns_desktop": 6,
+        "columns_mobile": "2"
+      }
+    },
+    "collection_list_Ft6Ya7": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_kXmze4": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "loại-rượu"
+          }
+        },
+        "featured_collection_8GTwtC": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "champagne"
+          }
+        },
+        "featured_collection_7zcTg8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "blended-whisky"
+          }
+        },
+        "featured_collection_LD3xNR": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "vodka"
+          }
+        },
+        "featured_collection_hA8kdN": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "frontpage"
+          }
+        },
+        "featured_collection_PBKhgh": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "liqueur-tequila-1"
+          }
+        },
+        "featured_collection_qyAAw8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "gin"
+          }
+        },
+        "featured_collection_HGRKL3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "rum"
+          }
+        },
+        "featured_collection_wgJJfQ": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "bia"
+          }
+        },
+        "featured_collection_qME4EP": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "rượu-sữa-1"
+          }
+        },
+        "featured_collection_7bXn97": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "nước-trai-cay"
+          }
+        },
+        "featured_collection_AAcpFE": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "rượu-sữa"
+          }
+        },
+        "featured_collection_9UYwnc": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "giỏ-qua"
+          }
+        },
+        "featured_collection_dJcYfh": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "hộp-qua"
+          }
+        },
+        "featured_collection_Vn47jm": {
+          "type": "featured_collection",
+          "disabled": true,
+          "settings": {
+            "collection": "hộp-qua-rượu"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_kXmze4",
+        "featured_collection_8GTwtC",
+        "featured_collection_7zcTg8",
+        "featured_collection_LD3xNR",
+        "featured_collection_hA8kdN",
+        "featured_collection_PBKhgh",
+        "featured_collection_qyAAw8",
+        "featured_collection_HGRKL3",
+        "featured_collection_wgJJfQ",
+        "featured_collection_qME4EP",
+        "featured_collection_7bXn97",
+        "featured_collection_AAcpFE",
+        "featured_collection_9UYwnc",
+        "featured_collection_dJcYfh",
+        "featured_collection_Vn47jm"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "TẤT CẢ LOẠI RƯỢU",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 6,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "collection_list_Ft6Ya7"
+  ]
+}

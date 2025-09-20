@@ -1,0 +1,224 @@
+{% schema %}
+{
+  "name": "Custom Footer",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Quick Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link Text",
+          "default": "Chính sách giao hàng"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Custom Footer"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .site-footer {
+    background-color: rgb(66, 0, 0);
+    color: white;
+  }
+
+  .site-footer a {
+    color: white;
+  }
+
+  .site-footer a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-container h4 {
+    color: white;
+  }
+
+  .social-icons a svg {
+    fill: white;
+    transition: fill 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    .footer-container {
+      grid-template-columns: 1fr !important;
+      gap: 1.5rem !important;
+      padding: 30px 16px !important;
+    }
+
+    .footer-container > div {
+      margin-bottom: 20px;
+    }
+
+    .social-icons {
+      justify-content: start;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .social-icons a svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .social-icons a[aria-label="Facebook"]:hover svg { fill: #1877F2; }
+  .social-icons a[aria-label="Instagram"]:hover svg { fill: #E1306C; }
+  .social-icons a[aria-label="TikTok"]:hover svg { fill: rgb(0, 0, 0); }
+  .social-icons a[aria-label="LinkedIn"]:hover svg { fill: #0A66C2; }
+  .social-icons a[aria-label="YouTube"]:hover svg { fill: #FF0000; }
+
+.compliance-notice {
+  padding: 5px 20px 40px; /* top 20px, left/right 20px, bottom 30px */
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.6;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
+  {% comment %} max-width: 900px; {% endcomment %}
+  margin: 0 auto; /* centered */
+  background: black !important;
+}
+
+}
+.compliance-notice strong {
+  display: block;
+  margin-top: 8px;
+}
+.footer-info-company {
+  text-align: center;
+  padding: 10px 0px 40px 0px;
+  margin: 0px;
+  /* background: linear-gradient(rgb(0, 0, 0) 77%, #fdbb2d 50%); */
+  /* background-repeat: no-repeat; */
+  background: linear-gradient(to bottom, #2b0000, transparent);
+}
+.custom-info {
+  margin: 0px;
+}
+</style>
+
+<footer class="site-footer" style="padding-bottom: 0;">
+  <div
+    class="footer-container"
+    style="max-width: 1200px; margin: auto; padding: 40px 20px; display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 2rem; font-size: 14px;"
+  >
+    <!-- Column 1: Company Info -->
+    <div>
+      <div class="footer-info-company">
+        <h4 class="custom-info">THÔNG TIN</h4>
+      </div>
+      {% comment %} <h4 style="font-weight: bold; margin-bottom: 10px; font-size: 24px">CÔNG TY TNHH GOLDEN WINE</h4> {% endcomment %}
+      <h4>CÔNG TY TNHH GOLDEN WINE</h4>
+      <span><strong>Địa chỉ:</strong> 80/59/116 Dương Quảng Hàm, Phường An Nhơn, TP. Hồ Chí Minh, Việt Nam</span><br>
+      <span><strong>MST:</strong> 0319047595</span><br>
+      <span><strong>Điện thoại:</strong> 0354160919</span><br>
+      <span><strong>Email:</strong> 
+        <a href="mailto:marketing.goldenwine@gmail.com" style="text-decoration: none;">marketing.goldenwine@gmail.com</a>
+      </span><br>
+      {% comment %} <p><strong>Số ĐKKD:</strong> 0319047595</p>
+      <p>Giấy phép bán lẻ rượu số 43/GP - KTHTĐT</p>
+      <p>Do Uỷ Ban Nhân Dân Phường An Nhơn ký ngày 22/08/2025 có thời hạn tới 22/08/2030</p>
+      <p><strong>Địa chỉ:</strong> 80/59/116 Dương Quảng Hàm, Phường An Nhơn, TP. Hồ Chí Minh, Việt Nam</p>
+      <p><strong>Điện thoại:</strong> 0354160919</p> {% endcomment %}
+      {% comment %} <p> 
+        <strong>Email:</strong>
+        <a href="mailto:marketing.goldenwine@gmail.com" style="text-decoration: none;">marketing.goldenwine@gmail.com</a>
+      </p> {% endcomment %}
+      {% comment %} <p><strong>Mã số thuế:</strong> 0319047595</p> {% endcomment %}
+      <p>
+        <span>Giấy phép bán lẻ rượu số 43/GP - KTHTĐT</span><br>
+        <span>Do Uỷ Ban Nhân Dân Phường An Nhơn, TP. Hồ Chí Minh ký ngày 22/08/2025 có thời hạn tới 22/08/2030</span>
+      </p>
+      <p>
+        <small><i>Uống nhiều rượu bia gây ảnh hưởng xấu tới sức khỏe, có thể làm mất khả năng nhận thức và gây nguy hiểm tới cộng đồng. Hãy uống rượu bia có trách nhiệm.</i></small>
+      </p>
+
+    </div>
+
+    <!-- Column 2: Quick Links -->
+    <div>
+       <div class="footer-info-company">
+        <h4 class="custom-info">CHÍNH SÁCH</h4>
+      </div>
+      {% comment %} <h4 style="font-weight: bold; margin-bottom: 10px; font-size: 24px">LIÊN KẾT</h4> {% endcomment %}
+      {% comment %} <h4 style="font-weight: bold; margin-bottom: 10px; font-size: 24px">LIÊN KẾT</h4> {% endcomment %}
+      <ul style="list-style: none; padding-left: 0;">
+        {% for block in section.blocks %}
+          <li style="margin-bottom: 10px;">
+            <a href="{{ block.settings.link_url }}" style="text-decoration: none;">
+              {{- block.settings.link_text -}}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <div class="social-icons" style="display: flex; gap: 10px; font-size: 20px; flex-wrap: wrap; margin-top: 10px;">
+        <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path d="M22 12c0-5.522-4.478-10-10-10S2 6.478 2 12c0 4.991 3.657 9.128 8.438 9.877v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.987C18.343 21.128 22 16.991 22 12z"/>
+          </svg>
+        </a>
+        <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-2a1.5 1.5 0 100 3 1.5 1.5 0 000-3z"/>
+          </svg>
+        </a>
+        <a href="https://tiktok.com" target="_blank" aria-label="TikTok">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M19 10.5594C17.6237 10.5623 16.2813 10.1327 15.1625 9.33125V14.9187C15.1622 15.9536 14.8459 16.9636 14.256 17.8139C13.666 18.6641 12.8306 19.3139 11.8613 19.6764C10.8921 20.0389 9.83525 20.0969 8.83217 19.8425C7.82909 19.5881 6.92759 19.0335 6.24825 18.2529C5.5689 17.4723 5.14409 16.5029 5.03064 15.4743C4.91718 14.4457 5.12049 13.407 5.61336 12.497C6.10624 11.5871 6.86519 10.8494 7.78871 10.3825C8.71223 9.9156 9.75629 9.74182 10.7813 9.88438V12.6938C10.3126 12.5462 9.80929 12.5505 9.34322 12.7061C8.87715 12.8616 8.47215 13.1605 8.18603 13.5599C7.89992 13.9593 7.74732 14.439 7.75004 14.9303C7.75276 15.4216 7.91064 15.8996 8.20115 16.2958C8.49167 16.6921 8.89995 16.9864 9.36771 17.1368C9.83547 17.2872 10.3388 17.2859 10.8058 17.1332C11.2728 16.9805 11.6796 16.6842 11.9682 16.2865C12.2567 15.8888 12.4122 15.4101 12.4125 14.9187V4H15.1625C15.161 4.23258 15.1808 4.46481 15.2219 4.69375C15.3175 5.20406 15.5162 5.68951 15.8058 6.12044C16.0954 6.55136 16.4699 6.91869 16.9063 7.2C17.5274 7.61026 18.2556 7.82871 19 7.82812V10.5594Z" fill="white"/>
+          </svg>
+        </a>
+        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 50 50">
+            <path d="M41,4H9C6.24,4,4,6.24,4,9v32c0,2.76,2.24,5,5,5h32c2.76,0,5-2.24,5-5V9C46,6.24,43.76,4,41,4z M17,20v19h-6V20H17z M11,14.47c0-1.4,1.2-2.47,3-2.47s2.93,1.07,3,2.47c0,1.4-1.12,2.53-3,2.53C12.2,17,11,15.87,11,14.47z M39,39h-6c0,0,0-9.26,0-10 c0-2-1-4-3.5-4.04h-0.08C27,24.96,26,27.02,26,29c0,0.91,0,10,0,10h-6V20h6v2.56c0,0,1.93-2.56,5.81-2.56 c3.97,0,7.19,2.73,7.19,8.26V39z" />
+          </svg>
+        </a>
+        <a href="https://youtube.com" target="_blank" aria-label="YouTube">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 50 50">
+            <path d="M44.9 14.5c-.4-2.2-2.3-3.8-4.5-4.3C37.1 9.5 31 9 24.4 9c-6.6 0-12.8.5-16.1 1.2-2.2.5-4.1 2-4.5 4.3C3.4 17 3 20.5 3 25s.4 8 1 10.5c.4 2.2 2.3 3.8 4.5 4.3 3.5.7 9.5 1.2 16.1 1.2s12.8-.5 16.1-1.2c2.2-.5 4.1-2 4.5-4.3.5-2.5 1-6 1.1-10.5-.1-4.5-.6-8-1.1-10.5zM19 32V18l12.2 7L19 32z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    {% comment %} <!-- Column 3: Map -->
+    <div>
+      <h4 style="font-weight: bold; margin-bottom: 10px; font-size: 24px;">BẢN ĐỒ LIÊN HỆ</h4>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31349.48277430003!2d106.64593633127278!3d10.835374116273272!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529078b51e6eb%3A0x28bd5bd9f01a1edc!2sGo%20Vap%2C%20Ho%20Chi%20Minh%20City%2C%20Vietnam!5e0!3m2!1sen!2s!4v1754128856519!5m2!1sen!2s"
+        width="100%"
+        height="250"
+        frameborder="0"
+        style="border:0;"
+        allowfullscreen
+      ></iframe>
+    </div> {% endcomment %}
+  </div>
+
+  <!-- Compliance Notice -->
+  <div class="compliance-notice">
+    Tuân thủ điều 16 của Luật Phòng, chống tác hại của rượu, bia số 44/2019/QH14 do Quốc Hội ban hành ngày 14 tháng 06 năm 2019 về Điều kiện bán rượu, bia theo hình thức thương mại điện tử. 
+    Nghị định số 24/2020/NĐ-CP quy định chi tiết một số điều của Luật Phòng, chống tác hại của rượu về kinh doanh bán hàng qua mạng. 
+    Vui lòng đến trực tiếp các cửa hàng hoặc gọi tới số hotline để được tư vấn (giá trên website chỉ mang tính chất tham khảo). 
+    Cam kết có trách nhiệm, đồng ý với các điều khoản của trang web này. 
+    Nội dung này dành cho những người trong độ tuổi uống rượu hợp pháp, vui lòng không chia sẻ hoặc chuyển tiếp cho bất kỳ ai chưa đủ tuổi vị thành niên.
+    <br><strong>THƯỞNG THỨC RƯỢU CÓ TRÁCH NHIỆM</strong>
+    <strong>SẢN PHẨM RƯỢU KHÔNG BÁN CHO NGƯỜI DƯỚI 18 TUỔI VÀ PHỤ NỮ MANG THAI</strong>
+    <strong>KHÔNG LÁI XE KHI ĐÃ UỐNG RƯỢU BIA</strong>
+  </div>
+</footer>

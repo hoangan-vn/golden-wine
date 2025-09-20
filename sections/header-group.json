@@ -1,0 +1,66 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "header_info_bar_Fmrx8W": {
+      "type": "header-info-bar",
+      "disabled": true,
+      "name": "Header Info Bar",
+      "settings": {
+        "hotline_number": "033 200 1516",
+        "open_hours": "Thứ 2- Thứ : 9AM - 5PM",
+        "store_location": "Gò Vấp, TP. Hồ Chí Minh, Việt Nam"
+      }
+    },
+    "header": {
+      "type": "header",
+      "custom_css": [],
+      "settings": {
+        "logo_position": "top-center",
+        "mobile_logo_position": "center",
+        "menu": "main-menu",
+        "menu_type_desktop": "mega",
+        "sticky_header_type": "always",
+        "show_line_separator": true,
+        "color_scheme": "scheme-1",
+        "menu_color_scheme": "scheme-1",
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "enable_customer_avatar": true,
+        "margin_bottom": 0,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "breadcrumb_N6XP9E": {
+      "type": "breadcrumb",
+      "custom_css": [],
+      "name": "Breadcrumb Navigation",
+      "settings": {
+        "breadcrumbs_home_icon_bool": true,
+        "breadcrumb_delimeter": "angle_right",
+        "breadcrumb_bg_color": "#ffffff",
+        "breadcrumb_text_color": "#505050",
+        "breadcrumb_accent_color_bool": true,
+        "breadcrumb_accent_color": "#9b053c",
+        "enable_product_page": true,
+        "enable_collection_page": false,
+        "enable_complete_site": true
+      }
+    }
+  },
+  "order": [
+    "header_info_bar_Fmrx8W",
+    "header",
+    "breadcrumb_N6XP9E"
+  ]
+}

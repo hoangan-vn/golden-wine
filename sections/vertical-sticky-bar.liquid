@@ -1,0 +1,172 @@
+<style>
+  /* DESKTOP Vertical Sticky Bar */
+  .vertical-sticky-bar {
+    position: fixed;
+    right: 15px;
+    top: 60%;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  /* Base button style */
+  .vertical-sticky-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    overflow: visible;
+  }
+
+  /* === Ripple layers === */
+  .vertical-sticky-item::before {
+    content: "";
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0.8;
+    z-index: 0;
+  }
+
+  .vertical-sticky-item .static-ring {
+    position: absolute;
+    width: 130%;
+    height: 130%;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  .vertical-sticky-item::after {
+    content: "";
+    position: absolute;
+    width: 130%;
+    height: 130%;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0.3;
+    animation: rippleOut 1.4s infinite ease-out;
+    z-index: 0;
+  }
+
+  /* Icon inside */
+  .sticky-icon {
+    width: 24px;
+    height: 24px;
+    fill: #fff;
+    z-index: 1;
+    animation: spinSwing 1s infinite ease-in-out;
+  }
+
+  /* === Per-icon colors === */
+  .vertical-sticky-item.facebook { background-color: #1877F2; } /* Facebook blue */
+  .vertical-sticky-item.phone { background-color: #720100; }      /* Old Home color */
+  .vertical-sticky-item.zalo { background-color: #00a0ff; }       /* Light blue */
+  .vertical-sticky-item.messenger {
+    background: linear-gradient(45deg, #0078FF, #A333C8, #FF4F81);
+  }
+
+  /* Hover effect */
+  .vertical-sticky-item:hover { filter: brightness(1.1); }
+
+  /* MOBILE Sticky Bar */
+  .sticky-bar-mobile {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    z-index: 1000;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 8px 0;
+  }
+
+  .sticky-bar-mobile .vertical-sticky-item { width: 36px; height: 36px; }
+
+  @media screen and (max-width: 768px) {
+    .vertical-sticky-bar.desktop-only { display: none; }
+    .sticky-bar-mobile { display: flex; }
+  }
+
+  @media screen and (min-width: 769px) {
+    .sticky-bar-mobile { display: none; }
+  }
+
+  /* Animations */
+  @keyframes spinSwing {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-15deg); }
+    100% { transform: rotate(0deg); }
+  }
+
+  @keyframes rippleOut {
+    0% { transform: scale(1); opacity: 0.3; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+
+  /* Toast notification */
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    background: #222;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 9999;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+
+<!-- DESKTOP Sticky Bar -->
+<div class="vertical-sticky-bar desktop-only">
+  {% render 'sticky-bar-icons' %}
+</div>
+
+<!-- MOBILE Sticky Bottom Bar -->
+<div class="sticky-bar-mobile">
+  {% render 'sticky-bar-icons' %}
+</div>
+
+<script>
+function showHotlineIfDesktop(e) {
+  const isMobile = /iPhone|iPad|iPod|Android|Windows Phone/i.test(navigator.userAgent);
+  if (!isMobile) {
+    e.preventDefault();
+    showToast("📞 Số Hotline: 035 4160919");
+    return false;
+  }
+  return true;
+}
+
+function showToast(message) {
+  let toast = document.createElement("div");
+  toast.className = "toast";
+  toast.innerText = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.classList.add("show"), 50);
+  setTimeout(() => { toast.classList.remove("show"); setTimeout(() => toast.remove(), 300); }, 3000);
+}
+</script>

@@ -1,0 +1,499 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_G9TWwq": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_hdFP6m": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/z6987468831396_eac11a1568fe616386c91abeb7b981dc.jpg",
+            "image_overlay_opacity": 0,
+            "heading": "ĐỎ RỰC MAY MẮN THÁNG NÀY CÙNG PENFOLDS",
+            "heading_size": "h2",
+            "subheading": "",
+            "button_label": "Shop Now",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_bVnaDr": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/z6987468842338_d510ad5d9cd2e9a5356aaa0527fb3d66.jpg",
+            "image_overlay_opacity": 0,
+            "heading": "PHIÊN BẢN GIỚI HẠN CỦA THÁNG TỪ NHÀ JOHNNIE WALKER",
+            "heading_size": "h2",
+            "subheading": "",
+            "button_label": "Shop Now",
+            "link": "",
+            "button_style_secondary": true,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_zFVG9h": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/z6987468874191_b670e45dbbb95a082788c563696990e3.jpg",
+            "image_overlay_opacity": 0,
+            "heading": "ƯU ĐÃI ĐẶC BIỆT THÁNG NÀY",
+            "heading_size": "h2",
+            "subheading": "",
+            "button_label": "Shop Now",
+            "link": "",
+            "button_style_secondary": false,
+            "show_text_box": true,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_hdFP6m",
+        "slide_bVnaDr",
+        "slide_zFVG9h"
+      ],
+      "name": "t:sections.slideshow.presets.name",
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "large",
+        "slider_visual": "dots",
+        "auto_rotate": true,
+        "change_slides_speed": 5,
+        "image_behavior": "ambient",
+        "show_text_below": true,
+        "accessibility_info": ""
+      }
+    },
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Chào mừng đến với Siêu Thị Rượu chính hãng",
+            "heading_add_2": "Image banner",
+            "heading_style": "",
+            "subheading": "Your sub heading here",
+            "subheading_style": "",
+            "heading_size": "h1"
+          }
+        },
+        "text_4eMFE4": {
+          "type": "text",
+          "settings": {
+            "text": "Chúng tôi tự hào mang đến cho bạn trải nghiệm mua sắm rượu trực tuyến tuyệt vời nhất. Với danh mục sản phẩm đa dạng, từ rượu vang, rượu mạnh đến các loại rượu đặc biệt, mọi sản phẩm đều được đảm bảo chất lượng và nguồn gốc rõ ràng.Chúng tôi cam kết cung cấp dịch vụ chăm sóc khách hàng chu đáo, luôn sẵn sàng hỗ trợ bạn trong suốt quá trình mua sắm. Hãy để chúng tôi đồng hành cùng bạn trong những khoảnh khắc đặc biệt với những chai rượu tuyệt hảo nhất!",
+            "text_style": "body"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Mua Ngay",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text_4eMFE4",
+        "button"
+      ],
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/a_bottle_of_white_image.jpg",
+        "image_overlay_opacity": 40,
+        "image_height": "medium",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "collection_list_xAfCPi": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_38RFic": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "loại-rượu"
+          }
+        },
+        "featured_collection_Yb9WKw": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "champagne"
+          }
+        },
+        "featured_collection_RatBAp": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "blended-whisky"
+          }
+        },
+        "featured_collection_Le97ha": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "vodka"
+          }
+        },
+        "featured_collection_fwtC6c": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "frontpage"
+          }
+        },
+        "featured_collection_FpqRyp": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "liqueur-tequila-1"
+          }
+        },
+        "featured_collection_GHGccq": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "gin"
+          }
+        },
+        "featured_collection_WR6DTM": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "rum"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_38RFic",
+        "featured_collection_Yb9WKw",
+        "featured_collection_RatBAp",
+        "featured_collection_Le97ha",
+        "featured_collection_fwtC6c",
+        "featured_collection_FpqRyp",
+        "featured_collection_GHGccq",
+        "featured_collection_WR6DTM"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "BẠN ĐANG TÌM SẢN PHẨM GÌ?",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 8,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 20,
+        "padding_bottom": 36
+      }
+    },
+    "image_banner_fA3DrH": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_mdnrnP": {
+          "type": "heading",
+          "settings": {
+            "heading": "EXLORE THE WORLD OF",
+            "heading_add_2": "WINE & SPIRITS",
+            "heading_style": "",
+            "subheading": "Explore curated stories of alcohol inspiration",
+            "subheading_style": "",
+            "heading_size": "h1"
+          }
+        },
+        "heading_2_znD3QG": {
+          "type": "heading_2",
+          "settings": {
+            "heading_2": "BELOVED BESTSELLERS",
+            "heading_2_style": "",
+            "subheading_2": "Gift or self-treat, our top sips always hit the spot",
+            "subheading_2_style": "",
+            "heading_2_size": "h1"
+          }
+        },
+        "buttons_YwQE68": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "Click here",
+            "button_link_1": "shopify://collections/blended-whisky",
+            "button_style_secondary_1": true,
+            "button_label_2": "Click here",
+            "button_link_2": "shopify://collections/vang-tay-ban-nha",
+            "button_style_secondary_2": true
+          }
+        }
+      },
+      "block_order": [
+        "heading_mdnrnP",
+        "heading_2_znD3QG",
+        "buttons_YwQE68"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/z6987290313498_9a2f1923ce188a3bc40e2210b7f7955b_23a862ae-9348-4890-ba40-3f056ad33942.jpg",
+        "image_2": "shopify://shop_images/z6987290313481_faa01e6be8f201858ed2403520da2003.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "small",
+        "image_behavior": "ambient",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "disabled": true,
+      "name": "Sản Phẩm Nổi Bật",
+      "settings": {
+        "collection": "sản-phẩm-ban-chạy",
+        "products_to_show": 8,
+        "title": "SẢN PHẨM NỔI BẬT",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 6,
+        "enable_desktop_slider": true,
+        "full_width": true,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 24,
+        "padding_bottom": 36
+      }
+    },
+    "featured_collection_QMJcNV": {
+      "type": "featured-collection",
+      "name": "Rượu Whisky",
+      "settings": {
+        "collection": "blended-whisky",
+        "products_to_show": 8,
+        "title": "WHISKY",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 6,
+        "enable_desktop_slider": true,
+        "full_width": true,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 24,
+        "padding_bottom": 36
+      }
+    },
+    "featured_collection_tW484F": {
+      "type": "featured-collection",
+      "name": "Rượu Cognac",
+      "settings": {
+        "collection": "frontpage",
+        "products_to_show": 8,
+        "title": "COGNAC",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 6,
+        "enable_desktop_slider": true,
+        "full_width": true,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 24,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn_6i9LjN": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_eqjtWM": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/shopping-cart-icon-png-favpng-WzFfWAWJe97MmDVjyDJwr5Y69.jpg",
+            "title": "",
+            "text": "<h2>Sản Phẩm Đa Dạng</h2><p>Cửa hàng cung cấp nhiều loại rượu vang và rượu mạnh từ khắp nơi trên thế giới, đáp ứng mọi sở thích.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_f8dUzK": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/product-quanlity.png",
+            "title": "",
+            "text": "<h2>Chất Lượng Đảm Bảo</h2><p>Chúng tôi cam kết cung cấp sản phẩm chất lượng cao, được chọn lọc từ các nhà sản xuất uy tín.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_mDCBEP": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/gia-ca-cua-hang-hoa-tren-thi-truong-bieu-hien-4-scaled-1.webp",
+            "title": "",
+            "text": "<h2>Giá Cả Cạnh Tranh</h2><p>Nhiều ưu đãi hấp dẫn giúp khách hàng tiết kiệm chi phí mà vẫn sở hữu sản phẩm tốt.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_cw39yi": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/kisspng-customer-service-technical-support-email-animation-people-icon-5ad0d7d75a14c9.059099041523636183369.jpg",
+            "title": "",
+            "text": "<h2>Đội Ngũ Làm Việc Tận Tâm </h2><p>Đội ngũ nhân viên am hiểu sẽ tư vấn tận tình để giúp bạn tìm ra sản phẩm hoàn hảo.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_aYCUnC": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/online-shopping-concept-smartphone-online-store-free-vector.jpg",
+            "title": "",
+            "text": "<h2>Trải Nghiệm Mua Sắm Online</h2><p>Giao diện mua sắm hiện đại và thân thiện giúp bạn thoải mái khám phá.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_xHQGbM": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/dich-vu-giao-hang-giaohangnhanh.png",
+            "title": "",
+            "text": "<h2>Giao Hàng Nhanh Chóng</h2><p>Dịch vụ giao hàng tiện lợi, giúp bạn nhận sản phẩm nhanh chóng và dễ dàng.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_eqjtWM",
+        "column_f8dUzK",
+        "column_mDCBEP",
+        "column_cw39yi",
+        "column_aYCUnC",
+        "column_xHQGbM"
+      ],
+      "custom_css": [],
+      "name": "t:sections.multicolumn.presets.name",
+      "settings": {
+        "title": "TẠI SAO NÊN CHỌN GOLDEN WINE ?",
+        "heading_size": "h2",
+        "image_width": "third",
+        "image_ratio": "square",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 6,
+        "column_alignment": "center",
+        "background_style": "primary",
+        "color_scheme": "scheme-1",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "newsletter_3TrLiQ": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_aHtwQH": {
+          "type": "heading",
+          "settings": {
+            "heading": "Đăng Ký Nhận Chương Trình Khuyến Mãi",
+            "heading_size": "h2"
+          }
+        },
+        "paragraph_iXRw7d": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<h5>Nhận thông tin cập nhật, thông báo về sản phẩm mới và các ưu đãi đặc biệt.<br/>Vui lòng xem chính sách bảo mật của chúng tôi để biết chi tiết về cách chúng tôi sử dụng dữ liệu cá nhân của bạn.</h5>"
+          }
+        },
+        "email_form_Cx773A": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_aHtwQH",
+        "paragraph_iXRw7d",
+        "email_form_Cx773A"
+      ],
+      "name": "t:sections.newsletter.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "slideshow_G9TWwq",
+    "image_banner",
+    "collection_list_xAfCPi",
+    "image_banner_fA3DrH",
+    "featured_collection",
+    "featured_collection_QMJcNV",
+    "featured_collection_tW484F",
+    "multicolumn_6i9LjN",
+    "newsletter_3TrLiQ"
+  ]
+}

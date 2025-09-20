@@ -1,0 +1,108 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer_custom_Y7MYd4": {
+      "type": "footer-custom",
+      "blocks": {
+        "link_ekGT3C": {
+          "type": "link",
+          "name": "Về Golden Wine",
+          "settings": {
+            "link_text": "Về Golden Wine",
+            "link_url": "shopify://pages/giới-thiệu-cong-ty-tnhh-tmdv-xnk-golden-wine"
+          }
+        },
+        "link_CerhFp": {
+          "type": "link",
+          "name": "Quy định sử dụng",
+          "settings": {
+            "link_text": "Quy định sử dụng",
+            "link_url": "shopify://pages/quy-dịnh-sử-dụng"
+          }
+        },
+        "link_y4Q8Bi": {
+          "type": "link",
+          "name": "Chính sách giao hàng ",
+          "settings": {
+            "link_text": "Chính sách giao hàng",
+            "link_url": "shopify://pages/chinh-sach-giao-hang"
+          }
+        },
+        "link_3YcNC7": {
+          "type": "link",
+          "name": "Chính sách thanh toán",
+          "settings": {
+            "link_text": "Chính sách thanh toán",
+            "link_url": "shopify://pages/chinh-sach-thanh-toan"
+          }
+        },
+        "link_JVeKAB": {
+          "type": "link",
+          "name": "Chính sách bảo mật",
+          "settings": {
+            "link_text": "Chính sách bảo mật",
+            "link_url": "shopify://pages/chinh-sach-bảo-mật"
+          }
+        },
+        "link_qDUxeE": {
+          "type": "link",
+          "name": "Chính sách kiểm hàng và đổi trả",
+          "settings": {
+            "link_text": "Chính sách kiểm hàng và đổi trả",
+            "link_url": "shopify://pages/chinh-sach-kiểm-hang-va-dổi-trả"
+          }
+        },
+        "link_a3Qx6U": {
+          "type": "link",
+          "settings": {
+            "link_text": "Tài khoản khách hàng",
+            "link_url": "shopify://pages/tai-khoản-khach-hang"
+          }
+        }
+      },
+      "block_order": [
+        "link_ekGT3C",
+        "link_CerhFp",
+        "link_y4Q8Bi",
+        "link_3YcNC7",
+        "link_JVeKAB",
+        "link_qDUxeE",
+        "link_a3Qx6U"
+      ],
+      "name": "Custom Footer",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "scheme-84310bf1-6579-4cf9-a989-e82973b036e6",
+        "newsletter_enable": false,
+        "newsletter_heading": "Đăng Ký Tài Khoản",
+        "enable_follow_on_shop": false,
+        "show_social": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "payment_enable": true,
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 0,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "footer_custom_Y7MYd4",
+    "footer"
+  ]
+}

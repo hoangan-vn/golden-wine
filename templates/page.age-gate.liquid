@@ -1,0 +1,62 @@
+{% layout none %}
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8">
+    <title>Xác minh độ tuổi</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #1a1a1a;
+        color: white;
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        text-align: center;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+      .btn {
+        padding: 12px 24px;
+        margin: 10px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .btn-yes {
+        background-color: #4caf50;
+        color: white;
+      }
+      .btn-no {
+        background-color: #f44336;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Website chỉ dành cho người từ 18 tuổi trở lên</h1>
+    <p>Bạn đã đủ 18 tuổi chưa?</p>
+    <div>
+      <button class="btn btn-yes" onclick="enterSite()">Trên 18 tuổi</button>
+      <button class="btn btn-no" onclick="underage()">Chưa đủ 18 tuổi</button>
+    </div>
+
+    <script>
+      function enterSite() {
+        localStorage.setItem('ageVerified', 'true');
+        window.location.href = "/";
+      }
+      function underage() {
+        alert("Bạn chưa đủ tuổi để truy cập website này.");
+        window.location.href = "https://www.google.com";
+      }
+    </script>
+  </body>
+</html>

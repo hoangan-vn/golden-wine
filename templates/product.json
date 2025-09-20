@@ -1,0 +1,110 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "custom_liquid_qYUq3p": {
+          "type": "custom_liquid",
+          "name": "Table",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "<table style=\"width: 100%; border-collapse: collapse; font-family: sans-serif; font-size: 15px;\">\n  <tbody>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Xuất xứ</td>\n      <td style=\"padding: 8px;\">Scotland</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Thương hiệu</td>\n      <td style=\"padding: 8px;\">Aberlour</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Nồng độ</td>\n      <td style=\"padding: 8px;\">40.0%</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Phân loại</td>\n      <td style=\"padding: 8px;\">Whisky</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Vùng</td>\n      <td style=\"padding: 8px;\">Speyside</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Hương vị</td>\n      <td style=\"padding: 8px;\">Hòa quyện giữa kẹo bơ, trái cây chín, vani và gỗ sồi, kết thúc với chút cay nhẹ của quế.</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Thức ăn kèm</td>\n      <td style=\"padding: 8px;\">Chocolate đen, thịt đỏ, phô mai lâu năm</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Dung tích</td>\n      <td style=\"padding: 8px;\">700ml</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Tuổi rượu</td>\n      <td style=\"padding: 8px;\">12 năm</td>\n    </tr>\n  </tbody>\n</table>"
+          }
+        },
+        "description_iirdGV": {
+          "type": "description",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "text_T9RXci": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "custom_liquid_qYUq3p",
+        "description_iirdGV",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "text_T9RXci"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "small",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "show",
+        "media_position": "left",
+        "image_zoom": "hover",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Sản phẩm tương tự",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products"
+  ]
+}
