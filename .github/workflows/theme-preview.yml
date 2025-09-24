@@ -29,9 +29,9 @@ jobs:
           STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE }}
           ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_API_TOKEN }}
         run: |
-          BRANCH="${GITHUB_HEAD_REF}"
-          SAFE_BRANCH=$(echo "$BRANCH" | tr '/' '-') # đổi / thành - để đặt tên theme
-          echo "Branch name: $BRANCH (safe: $SAFE_BRANCH)"
+          RAW_BRANCH="${GITHUB_HEAD_REF}"
+          SAFE_BRANCH=$(echo "$RAW_BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's#[^a-z0-9]+#-#g')
+          echo "Branch name: $RAW_BRANCH (safe: $SAFE_BRANCH)"
 
           THEMES=$(curl -s -X GET \
             "https://${STORE_DOMAIN}/admin/api/2024-07/themes.json" \
@@ -49,8 +49,8 @@ jobs:
               | jq -r ".theme.id")
           fi
 
-          echo "THEME_ID=$THEME_ID" >> $GITHUB_ENV
           echo "SAFE_BRANCH=$SAFE_BRANCH" >> $GITHUB_ENV
+          echo "THEME_ID=$THEME_ID" >> $GITHUB_ENV
 
       - name: Push theme to Shopify
         env:
