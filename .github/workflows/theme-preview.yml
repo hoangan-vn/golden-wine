@@ -1,0 +1,108 @@
+name: Shopify Theme Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.head.repo.fork }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Ensure jq
+        run: |
+          if ! command -v jq >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y jq
+          fi
+
+      # 🟢 Nếu PR bị đóng (merged/closed) thì xóa theme
+      - name: Delete theme if PR closed
+        if: ${{ github.event.action == 'closed' }}
+        env:
+          STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
+          ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_API_TOKEN }}
+        run: |
+          BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
+          echo "Branch name: $BRANCH"
+
+          THEMES=$(curl -s -X GET \
+            "https://${STORE_DOMAIN}/admin/api/2024-07/themes.json" \
+            -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}")
+
+          THEME_ID=$(echo "$THEMES" | jq -r ".themes[] | select(.name==\"$BRANCH\") | .id")
+
+          if [ -n "$THEME_ID" ] && [ "$THEME_ID" != "null" ]; then
+            echo "Deleting theme $THEME_ID..."
+            curl -s -X DELETE \
+              "https://${STORE_DOMAIN}/admin/api/2024-07/themes/${THEME_ID}.json" \
+              -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}"
+          else
+            echo "No preview theme found for $BRANCH"
+          fi
+        continue-on-error: true
+
+      # 🟢 Nếu PR đang mở thì tạo/cập nhật preview
+      - name: Get or Create Theme in Shopify
+        if: ${{ github.event.action != 'closed' }}
+        id: theme
+        env:
+          STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
+          ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_API_TOKEN }}
+        run: |
+          BRANCH="${GITHUB_HEAD_REF}"
+          echo "Branch name: $BRANCH"
+
+          THEMES=$(curl -s -X GET \
+            "https://${STORE_DOMAIN}/admin/api/2024-07/themes.json" \
+            -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}")
+
+          THEME_ID=$(echo "$THEMES" | jq -r ".themes[] | select(.name==\"$BRANCH\") | .id")
+
+          if [ -z "$THEME_ID" ] || [ "$THEME_ID" = "null" ]; then
+            echo "No theme found for branch, creating new..."
+            THEME_ID=$(curl -s -X POST \
+              "https://${STORE_DOMAIN}/admin/api/2024-07/themes.json" \
+              -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{\"theme\":{\"name\":\"$BRANCH\",\"role\":\"unpublished\"}}" \
+              | jq -r ".theme.id")
+          fi
+
+          echo "THEME_ID=$THEME_ID" >> $GITHUB_ENV
+
+      - name: Install Shopify CLI
+        if: ${{ github.event.action != 'closed' }}
+        run: |
+          npm i -g @shopify/cli @shopify/cli-theme
+
+      - name: Push theme assets to unpublished theme (dev preview)
+        if: ${{ github.event.action != 'closed' }}
+        env:
+          SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_THEME_ACCESS_PASSWORD }}
+        run: |
+          export SHOPIFY_CLI_TTY=0
+          shopify theme push \
+            --theme "${THEME_ID}" \
+            --path "." \
+            --json \
+            --no-color \
+            --skip-deploy-confirmation
+
+      - name: Comment Preview Link on PR
+        if: ${{ github.event.action != 'closed' }}
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: shopify-preview
+          message: |
+            ✅ Shopify preview for this branch is ready!
+
+            👉 [**View Preview**](https://${{ secrets.SHOPIFY_STORE_DOMAIN }}/?preview_theme_id=${{ env.THEME_ID }})
