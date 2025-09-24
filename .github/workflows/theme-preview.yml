@@ -1,0 +1,77 @@
+name: Shopify Theme Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.head.repo.fork }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+          npm i -g @shopify/cli @shopify/cli-theme
+
+      - name: Get or Create Theme in Shopify
+        id: theme
+        env:
+          STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE }}
+          ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_API_TOKEN }}
+        run: |
+          BRANCH="${GITHUB_HEAD_REF}"
+          SAFE_BRANCH=$(echo "$BRANCH" | tr '/' '-') # đổi / thành - để đặt tên theme
+          echo "Branch name: $BRANCH (safe: $SAFE_BRANCH)"
+
+          THEMES=$(curl -s -X GET \
+            "https://${STORE_DOMAIN}/admin/api/2024-07/themes.json" \
+            -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}")
+
+          THEME_ID=$(echo "$THEMES" | jq -r ".themes[] | select(.name==\"$SAFE_BRANCH\") | .id")
+
+          if [ -z "$THEME_ID" ] || [ "$THEME_ID" = "null" ]; then
+            echo "No theme found for branch, creating new..."
+            THEME_ID=$(curl -s -X POST \
+              "https://${STORE_DOMAIN}/admin/api/2024-07/themes.json" \
+              -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{\"theme\":{\"name\":\"$SAFE_BRANCH\",\"role\":\"unpublished\"}}" \
+              | jq -r ".theme.id")
+          fi
+
+          echo "THEME_ID=$THEME_ID" >> $GITHUB_ENV
+          echo "SAFE_BRANCH=$SAFE_BRANCH" >> $GITHUB_ENV
+
+      - name: Push theme to Shopify
+        env:
+          SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}
+          SHOPIFY_THEME_ACCESS_PASSWORD: ${{ secrets.SHOPIFY_THEME_ACCESS_PASSWORD }}
+          THEME_ID: ${{ env.THEME_ID }}
+        run: |
+          export SHOPIFY_CLI_TTY=0
+          shopify theme push \
+            --store "$SHOPIFY_STORE" \
+            --password "$SHOPIFY_THEME_ACCESS_PASSWORD" \
+            --theme "$THEME_ID" \
+            --path "." \
+            --json \
+            --no-color \
+            --skip-deploy-confirmation
+
+      - name: Comment Preview Link on PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: shopify-preview
+          message: |
+            ✅ Shopify preview for this branch:
+            🔗 https://${{ secrets.SHOPIFY_STORE }}/?preview_theme_id=${{ env.THEME_ID }}
