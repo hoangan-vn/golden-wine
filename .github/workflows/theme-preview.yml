@@ -12,6 +12,7 @@ jobs:
   preview:
     runs-on: ubuntu-latest
     if: ${{ !github.event.pull_request.head.repo.fork }}
+    environment: shopify
 
     steps:
       - name: Checkout repo
@@ -31,11 +32,16 @@ jobs:
         run: |
           RAW_BRANCH="${GITHUB_HEAD_REF}"
           SAFE_BRANCH=$(echo "$RAW_BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's#[^a-z0-9]+#-#g')
+
           echo "Branch name: $RAW_BRANCH (safe: $SAFE_BRANCH)"
+          echo "STORE_DOMAIN=${STORE_DOMAIN}"
+          echo "ADMIN_TOKEN length=${#ADMIN_TOKEN}"
 
           THEMES=$(curl -s -X GET \
             "https://${STORE_DOMAIN}/admin/api/2024-07/themes.json" \
             -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}")
+
+          echo "Existing themes: $(echo "$THEMES" | jq '.themes | length')"
 
           THEME_ID=$(echo "$THEMES" | jq -r ".themes[] | select(.name==\"$SAFE_BRANCH\") | .id")
 
@@ -51,6 +57,7 @@ jobs:
 
           echo "SAFE_BRANCH=$SAFE_BRANCH" >> $GITHUB_ENV
           echo "THEME_ID=$THEME_ID" >> $GITHUB_ENV
+          echo "Resolved THEME_ID=$THEME_ID"
 
       - name: Push theme to Shopify
         env:
@@ -59,6 +66,7 @@ jobs:
           THEME_ID: ${{ env.THEME_ID }}
         run: |
           export SHOPIFY_CLI_TTY=0
+          echo "Pushing theme $THEME_ID to store $SHOPIFY_STORE..."
           shopify theme push \
             --store "$SHOPIFY_STORE" \
             --password "$SHOPIFY_THEME_ACCESS_PASSWORD" \
