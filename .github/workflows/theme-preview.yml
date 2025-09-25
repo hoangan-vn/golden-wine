@@ -53,7 +53,7 @@ jobs:
       - name: Handle Theme Lifecycle
         id: theme
         env:
-          STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE }}
+          STORE_DOMAIN: syx10i-mq.myshopify.com
           ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_API_TOKEN }}
           PR_ACTION: ${{ github.event.action }}
         run: |
@@ -95,7 +95,7 @@ jobs:
             local max_retries=3
             local retry_count=0
             
-            echo "Making API call: $method to $url"
+            echo "Making API call: $method to $url" >&2
             
             while [ $retry_count -lt $max_retries ]; do
               if [ -n "$data" ]; then
@@ -115,39 +115,37 @@ jobs:
               body=$(echo "$response" | head -n -1)
               status=$(echo "$response" | tail -n1)
               
-              echo "API Call: $method $url - Status: $status"
+              echo "API Call: $method $url - Status: $status" >&2
               
               # Debug info for 000 status
               if [ "$status" = "000" ]; then
-                echo "❌ Connection failed. Debugging info:"
-                echo "Store Domain: ${CLEAN_STORE}"
-                echo "Full URL: ${API_BASE}/$url"
-                echo "Token length: ${#ADMIN_TOKEN}"
+                echo "❌ Connection failed. Debugging info:" >&2
+                echo "Store Domain: ${CLEAN_STORE}" >&2
+                echo "Full URL: ${API_BASE}/$url" >&2
+                echo "Token length: ${#ADMIN_TOKEN}" >&2
                 
                 # Test basic connectivity
-                echo "Testing basic connectivity..."
-                curl -sSI --connect-timeout 5 --max-time 10 "https://${CLEAN_STORE}" || echo "Basic connection test failed"
-                echo "Testing Admin API base URL..."
-                curl -sSI --connect-timeout 5 --max-time 10 "${API_BASE}" || echo "Admin API base connectivity failed"
+                echo "Testing basic connectivity..." >&2
+                curl -sSI --connect-timeout 5 --max-time 10 "https://${CLEAN_STORE}" >/dev/null || echo "Basic connection test failed" >&2
+                echo "Testing Admin API base URL..." >&2
+                curl -sSI --connect-timeout 5 --max-time 10 "${API_BASE}" >/dev/null || echo "Admin API base connectivity failed" >&2
               fi
               
               if [ "$status" -eq 429 ]; then
-                echo "Rate limited, waiting..."
+                echo "Rate limited, waiting..." >&2
                 sleep $((2 ** retry_count))
                 retry_count=$((retry_count + 1))
                 continue
               fi
               
-              # Expose HTTP status to callers and succeed shell-wise
-              LAST_HTTP_STATUS="$status"
-              export LAST_HTTP_STATUS
+              # Emit status marker on first line to stdout, then body
+              echo "__STATUS__:$status"
               echo "$body"
               return 0
             done
             
-            echo "Max retries exceeded"
-            LAST_HTTP_STATUS=0
-            export LAST_HTTP_STATUS
+            echo "Max retries exceeded" >&2
+            echo "__STATUS__:0"
             return 1
           }
 
@@ -155,13 +153,17 @@ jobs:
           if [ "$PR_ACTION" = "closed" ]; then
             echo "PR closed, cleaning up preview theme..."
             
-            themes_response=$(make_api_call "GET" "themes.json" "")
+            api_raw=$(make_api_call "GET" "themes.json" "")
+            LAST_HTTP_STATUS=$(echo "$api_raw" | sed -n '1s/__STATUS__://p')
+            themes_response=$(echo "$api_raw" | tail -n +2)
             if [ "$LAST_HTTP_STATUS" -eq 200 ]; then
               theme_id=$(echo "$themes_response" | jq -r ".themes[] | select(.name==\"$THEME_NAME\") | .id")
               
               if [ -n "$theme_id" ] && [ "$theme_id" != "null" ]; then
                 echo "Deleting theme ID: $theme_id"
-                delete_response=$(make_api_call "DELETE" "themes/$theme_id.json" "")
+                api_raw_del=$(make_api_call "DELETE" "themes/$theme_id.json" "")
+                LAST_HTTP_STATUS=$(echo "$api_raw_del" | sed -n '1s/__STATUS__://p')
+                delete_response=$(echo "$api_raw_del" | tail -n +2)
                 if [ "$LAST_HTTP_STATUS" -eq 200 ]; then
                   echo "✅ Preview theme cleaned up successfully"
                 else
@@ -175,9 +177,11 @@ jobs:
           fi
 
           # Get existing themes
-          themes_response=$(make_api_call "GET" "themes.json" "")
+          api_raw=$(make_api_call "GET" "themes.json" "")
+          LAST_HTTP_STATUS=$(echo "$api_raw" | sed -n '1s/__STATUS__://p')
+          themes_response=$(echo "$api_raw" | tail -n +2)
           if [ "$LAST_HTTP_STATUS" -ne 200 ]; then
-            echo "❌ Failed to fetch themes: $themes_response"
+            echo "❌ Failed to fetch themes: $api_raw"
             exit 1
           fi
 
@@ -188,7 +192,9 @@ jobs:
             echo "Creating new theme: $THEME_NAME"
             
             create_data="{\"theme\":{\"name\":\"$THEME_NAME\",\"role\":\"unpublished\"}}"
-            create_response=$(make_api_call "POST" "themes.json" "$create_data")
+            api_raw_create=$(make_api_call "POST" "themes.json" "$create_data")
+            LAST_HTTP_STATUS=$(echo "$api_raw_create" | sed -n '1s/__STATUS__://p')
+            create_response=$(echo "$api_raw_create" | tail -n +2)
             
             if [ "$LAST_HTTP_STATUS" -ne 201 ]; then
               echo "❌ Failed to create theme: $create_response"
@@ -236,7 +242,7 @@ jobs:
 
             ✅ **Preview is ready!**
 
-            🔗 **Preview Link**: https://${{ secrets.SHOPIFY_STORE }}/?preview_theme_id=${{ env.THEME_ID }}
+            🔗 **Preview Link**: https://${{ env.NORMALIZED_STORE_DOMAIN }}/?preview_theme_id=${{ env.THEME_ID }}
 
             📝 **Theme Name**: `${{ env.THEME_NAME }}`
 
