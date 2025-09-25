@@ -134,11 +134,16 @@ jobs:
                 continue
               fi
               
+              # Expose HTTP status to callers and succeed shell-wise
+              LAST_HTTP_STATUS="$status"
+              export LAST_HTTP_STATUS
               echo "$body"
-              return $status
+              return 0
             done
             
             echo "Max retries exceeded"
+            LAST_HTTP_STATUS=0
+            export LAST_HTTP_STATUS
             return 1
           }
 
@@ -147,13 +152,13 @@ jobs:
             echo "PR closed, cleaning up preview theme..."
             
             themes_response=$(make_api_call "GET" "themes.json" "")
-            if [ $? -eq 200 ]; then
+            if [ "$LAST_HTTP_STATUS" -eq 200 ]; then
               theme_id=$(echo "$themes_response" | jq -r ".themes[] | select(.name==\"$THEME_NAME\") | .id")
               
               if [ -n "$theme_id" ] && [ "$theme_id" != "null" ]; then
                 echo "Deleting theme ID: $theme_id"
                 delete_response=$(make_api_call "DELETE" "themes/$theme_id.json" "")
-                if [ $? -eq 200 ]; then
+                if [ "$LAST_HTTP_STATUS" -eq 200 ]; then
                   echo "✅ Preview theme cleaned up successfully"
                 else
                   echo "⚠️ Failed to delete theme, but continuing..."
@@ -167,7 +172,7 @@ jobs:
 
           # Get existing themes
           themes_response=$(make_api_call "GET" "themes.json" "")
-          if [ $? -ne 200 ]; then
+          if [ "$LAST_HTTP_STATUS" -ne 200 ]; then
             echo "❌ Failed to fetch themes: $themes_response"
             exit 1
           fi
@@ -181,7 +186,7 @@ jobs:
             create_data="{\"theme\":{\"name\":\"$THEME_NAME\",\"role\":\"unpublished\"}}"
             create_response=$(make_api_call "POST" "themes.json" "$create_data")
             
-            if [ $? -ne 201 ]; then
+            if [ "$LAST_HTTP_STATUS" -ne 201 ]; then
               echo "❌ Failed to create theme: $create_response"
               exit 1
             fi
