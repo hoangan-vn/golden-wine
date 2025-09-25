@@ -228,7 +228,7 @@ jobs:
             --json \
             --no-color \
             --nodelete \
-            --skip-deploy-confirmation
+            --force
             
           echo "✅ Theme push completed"
 
