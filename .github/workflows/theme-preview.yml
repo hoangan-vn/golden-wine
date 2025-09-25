@@ -1,0 +1,263 @@
+name: Shopify Theme Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.head.repo.fork }}
+    environment: shopify
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Validate required secrets
+        run: |
+          missing_secrets=()
+
+          if [[ -z "${{ secrets.SHOPIFY_STORE }}" ]]; then
+            missing_secrets+=("SHOPIFY_STORE")
+          fi
+          if [[ -z "${{ secrets.SHOPIFY_ADMIN_API_TOKEN }}" ]]; then
+            missing_secrets+=("SHOPIFY_ADMIN_API_TOKEN")
+          fi
+          if [[ -z "${{ secrets.SHOPIFY_THEME_ACCESS_PASSWORD }}" ]]; then
+            missing_secrets+=("SHOPIFY_THEME_ACCESS_PASSWORD")
+          fi
+
+          if [ ${#missing_secrets[@]} -gt 0 ]; then
+            echo "❌ Missing required secrets:"
+            printf '   - %s\n' "${missing_secrets[@]}"
+            echo ""
+            echo "Please configure these secrets in:"
+            echo "Repository Settings → Secrets and variables → Actions"
+            exit 1
+          fi
+
+          echo "✅ All required secrets are configured"
+
+      - name: Install dependencies
+        if: github.event.action != 'closed'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq curl
+          npm i -g @shopify/cli@latest @shopify/theme@latest
+
+      - name: Handle Theme Lifecycle
+        id: theme
+        env:
+          STORE_DOMAIN: syx10i-mq.myshopify.com
+          ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_API_TOKEN }}
+          PR_ACTION: ${{ github.event.action }}
+        run: |
+          set -euo pipefail
+
+          # Debug environment variables
+          echo "Store Domain: $STORE_DOMAIN"
+          echo "Admin Token length: ${#ADMIN_TOKEN}"
+          echo "PR Action: $PR_ACTION"
+
+          # Normalize store domain to <store>.myshopify.com and strip any scheme/path
+          RAW_STORE="$STORE_DOMAIN"
+          CLEAN_STORE=$(echo "$RAW_STORE" | sed -E 's#^https?://##; s#/.*$##')
+          if [[ "$CLEAN_STORE" != *.* ]]; then
+            CLEAN_STORE="${CLEAN_STORE}.myshopify.com"
+          fi
+          API_BASE="https://${CLEAN_STORE}/admin/api/2024-10"
+          echo "Normalized Store Domain: $CLEAN_STORE"
+          echo "NORMALIZED_STORE_DOMAIN=$CLEAN_STORE" >> $GITHUB_ENV
+
+          RAW_BRANCH="${GITHUB_HEAD_REF}"
+          # Truncate and sanitize branch name (max 50 chars for Shopify)
+          SAFE_BRANCH=$(echo "$RAW_BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's#[^a-z0-9]+#-#g' | cut -c1-50 | sed 's/-*$//')
+          THEME_PREFIX="gh-preview-"
+          THEME_NAME="${THEME_PREFIX}${SAFE_BRANCH}"
+
+          echo "Branch: $RAW_BRANCH → Theme: $THEME_NAME"
+          echo "THEME_NAME=$THEME_NAME" >> $GITHUB_ENV
+
+          # Initialize HTTP status holder to avoid unbound variable with `set -u`
+          LAST_HTTP_STATUS=0
+          export LAST_HTTP_STATUS
+
+          # Function to make API calls with retry
+          make_api_call() {
+            local method=$1
+            local url=$2
+            local data=${3:-}
+            local max_retries=3
+            local retry_count=0
+            
+            echo "Making API call: $method to $url" >&2
+            
+            while [ $retry_count -lt $max_retries ]; do
+              if [ -n "$data" ]; then
+                response=$(curl -sS -w "\n%{http_code}" -X "$method" \
+                  "${API_BASE}/$url" \
+                  -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}" \
+                  -H "Content-Type: application/json" \
+                  --connect-timeout 10 --max-time 60 --retry 3 --retry-delay 2 --retry-all-errors \
+                  -d "$data")
+              else
+                response=$(curl -sS -w "\n%{http_code}" -X "$method" \
+                  "${API_BASE}/$url" \
+                  -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}" \
+                  --connect-timeout 10 --max-time 60 --retry 3 --retry-delay 2 --retry-all-errors)
+              fi
+              
+              body=$(echo "$response" | head -n -1)
+              status=$(echo "$response" | tail -n1)
+              
+              echo "API Call: $method $url - Status: $status" >&2
+              
+              # Debug info for 000 status
+              if [ "$status" = "000" ]; then
+                echo "❌ Connection failed. Debugging info:" >&2
+                echo "Store Domain: ${CLEAN_STORE}" >&2
+                echo "Full URL: ${API_BASE}/$url" >&2
+                echo "Token length: ${#ADMIN_TOKEN}" >&2
+                
+                # Test basic connectivity
+                echo "Testing basic connectivity..." >&2
+                curl -sSI --connect-timeout 5 --max-time 10 "https://${CLEAN_STORE}" >/dev/null || echo "Basic connection test failed" >&2
+                echo "Testing Admin API base URL..." >&2
+                curl -sSI --connect-timeout 5 --max-time 10 "${API_BASE}" >/dev/null || echo "Admin API base connectivity failed" >&2
+              fi
+              
+              if [ "$status" -eq 429 ]; then
+                echo "Rate limited, waiting..." >&2
+                sleep $((2 ** retry_count))
+                retry_count=$((retry_count + 1))
+                continue
+              fi
+              
+              # Emit status marker on first line to stdout, then body
+              echo "__STATUS__:$status"
+              echo "$body"
+              return 0
+            done
+            
+            echo "Max retries exceeded" >&2
+            echo "__STATUS__:0"
+            return 1
+          }
+
+          # If PR is closed, delete the preview theme
+          if [ "$PR_ACTION" = "closed" ]; then
+            echo "PR closed, cleaning up preview theme..."
+            
+            api_raw=$(make_api_call "GET" "themes.json" "")
+            LAST_HTTP_STATUS=$(echo "$api_raw" | sed -n '1s/__STATUS__://p')
+            themes_response=$(echo "$api_raw" | tail -n +2)
+            if [ "$LAST_HTTP_STATUS" -eq 200 ]; then
+              theme_id=$(echo "$themes_response" | jq -r ".themes[] | select(.name==\"$THEME_NAME\") | .id")
+              
+              if [ -n "$theme_id" ] && [ "$theme_id" != "null" ]; then
+                echo "Deleting theme ID: $theme_id"
+                api_raw_del=$(make_api_call "DELETE" "themes/$theme_id.json" "")
+                LAST_HTTP_STATUS=$(echo "$api_raw_del" | sed -n '1s/__STATUS__://p')
+                delete_response=$(echo "$api_raw_del" | tail -n +2)
+                if [ "$LAST_HTTP_STATUS" -eq 200 ]; then
+                  echo "✅ Preview theme cleaned up successfully"
+                else
+                  echo "⚠️ Failed to delete theme, but continuing..."
+                fi
+              else
+                echo "ℹ️ No theme found to cleanup"
+              fi
+            fi
+            exit 0
+          fi
+
+          # Get existing themes
+          api_raw=$(make_api_call "GET" "themes.json" "")
+          LAST_HTTP_STATUS=$(echo "$api_raw" | sed -n '1s/__STATUS__://p')
+          themes_response=$(echo "$api_raw" | tail -n +2)
+          if [ "$LAST_HTTP_STATUS" -ne 200 ]; then
+            echo "❌ Failed to fetch themes: $api_raw"
+            exit 1
+          fi
+
+          # Check if theme already exists
+          theme_id=$(echo "$themes_response" | jq -r ".themes[] | select(.name==\"$THEME_NAME\") | .id")
+
+          if [ -z "$theme_id" ] || [ "$theme_id" = "null" ]; then
+            echo "Creating new theme: $THEME_NAME"
+            
+            create_data="{\"theme\":{\"name\":\"$THEME_NAME\",\"role\":\"unpublished\"}}"
+            api_raw_create=$(make_api_call "POST" "themes.json" "$create_data")
+            LAST_HTTP_STATUS=$(echo "$api_raw_create" | sed -n '1s/__STATUS__://p')
+            create_response=$(echo "$api_raw_create" | tail -n +2)
+            
+            if [ "$LAST_HTTP_STATUS" -ne 201 ]; then
+              echo "❌ Failed to create theme: $create_response"
+              exit 1
+            fi
+            
+            theme_id=$(echo "$create_response" | jq -r ".theme.id")
+            echo "✅ Created new theme with ID: $theme_id"
+          else
+            echo "✅ Found existing theme with ID: $theme_id"
+          fi
+
+          echo "THEME_ID=$theme_id" >> $GITHUB_ENV
+
+      - name: Push theme to Shopify
+        if: github.event.action != 'closed'
+        env:
+          SHOPIFY_STORE: ${{ env.NORMALIZED_STORE_DOMAIN }}
+          SHOPIFY_THEME_ACCESS_PASSWORD: ${{ secrets.SHOPIFY_THEME_ACCESS_PASSWORD }}
+          THEME_ID: ${{ env.THEME_ID }}
+        run: |
+          export SHOPIFY_CLI_TTY=0
+
+          echo "Pushing theme files to Shopify..."
+
+          shopify theme push \
+            --store "$SHOPIFY_STORE" \
+            --password "$SHOPIFY_THEME_ACCESS_PASSWORD" \
+            --theme "$THEME_ID" \
+            --path "." \
+            --json \
+            --no-color \
+            --nodelete \
+            --force
+            
+          echo "✅ Theme push completed"
+
+      - name: Comment Preview Link on PR
+        if: github.event.action != 'closed'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: shopify-preview
+          message: |
+            ## 🛍️ Shopify Theme Preview
+
+            ✅ **Preview is ready!**
+
+            🔗 **Preview Link**: https://${{ env.NORMALIZED_STORE_DOMAIN }}/?preview_theme_id=${{ env.THEME_ID }}
+
+            📝 **Theme Name**: `${{ env.THEME_NAME }}`
+
+            ---
+            *This preview will be automatically cleaned up when the PR is closed.*
+
+      - name: Comment cleanup notification
+        if: github.event.action == 'closed'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: shopify-preview
+          message: |
+            ## 🛍️ Shopify Theme Preview - Cleaned Up
+
+            ✅ Preview theme has been automatically deleted since this PR was closed.
+
+            ---
+            *Theme cleanup completed.*
