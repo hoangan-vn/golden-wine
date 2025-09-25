@@ -12,6 +12,7 @@ jobs:
   preview:
     runs-on: ubuntu-latest
     if: ${{ !github.event.pull_request.head.repo.fork }}
+    environment: shopify
 
     steps:
       - name: Checkout repo
@@ -19,20 +20,31 @@ jobs:
 
       - name: Validate required secrets
         run: |
+          missing_secrets=()
+          
           if [[ -z "${{ secrets.SHOPIFY_STORE }}" ]]; then
-            echo "❌ SHOPIFY_STORE secret is missing"
-            exit 1
+            missing_secrets+=("SHOPIFY_STORE")
           fi
           if [[ -z "${{ secrets.SHOPIFY_ADMIN_API_TOKEN }}" ]]; then
-            echo "❌ SHOPIFY_ADMIN_API_TOKEN secret is missing"
-            exit 1
+            missing_secrets+=("SHOPIFY_ADMIN_API_TOKEN")
           fi
           if [[ -z "${{ secrets.SHOPIFY_THEME_ACCESS_PASSWORD }}" ]]; then
-            echo "❌ SHOPIFY_THEME_ACCESS_PASSWORD secret is missing"
+            missing_secrets+=("SHOPIFY_THEME_ACCESS_PASSWORD")
+          fi
+          
+          if [ ${#missing_secrets[@]} -gt 0 ]; then
+            echo "❌ Missing required secrets:"
+            printf '   - %s\n' "${missing_secrets[@]}"
+            echo ""
+            echo "Please configure these secrets in:"
+            echo "Repository Settings → Secrets and variables → Actions"
             exit 1
           fi
+          
+          echo "✅ All required secrets are configured"
 
       - name: Install dependencies
+        if: github.event.action != 'closed'
         run: |
           sudo apt-get update
           sudo apt-get install -y jq curl
@@ -67,13 +79,13 @@ jobs:
             while [ $retry_count -lt $max_retries ]; do
               if [ -n "$data" ]; then
                 response=$(curl -s -w "\n%{http_code}" -X "$method" \
-                  "https://${STORE_DOMAIN}/admin/api/2024-07/$url" \
+                  "https://${STORE_DOMAIN}/admin/api/2024-10/themes.json" \
                   -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}" \
                   -H "Content-Type: application/json" \
                   -d "$data")
               else
                 response=$(curl -s -w "\n%{http_code}" -X "$method" \
-                  "https://${STORE_DOMAIN}/admin/api/2024-07/$url" \
+                  "https://${STORE_DOMAIN}/admin/api/2024-10/$url" \
                   -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}")
               fi
               
@@ -113,6 +125,8 @@ jobs:
                 else
                   echo "⚠️ Failed to delete theme, but continuing..."
                 fi
+              else
+                echo "ℹ️ No theme found to cleanup"
               fi
             fi
             exit 0
