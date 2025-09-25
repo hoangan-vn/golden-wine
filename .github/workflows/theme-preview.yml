@@ -75,9 +75,12 @@ jobs:
           echo "NORMALIZED_STORE_DOMAIN=$CLEAN_STORE" >> $GITHUB_ENV
 
           RAW_BRANCH="${GITHUB_HEAD_REF}"
-          # Truncate and sanitize branch name (max 50 chars for Shopify)
-          SAFE_BRANCH=$(echo "$RAW_BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's#[^a-z0-9]+#-#g' | cut -c1-50 | sed 's/-*$//')
           THEME_PREFIX="gh-preview-"
+          # Theme name fixed max 50 characters
+          MAX_NAME_LEN=50
+          BRANCH_MAX_LEN=$((MAX_NAME_LEN - ${#THEME_PREFIX}))
+          # Sanitize và cắt theo BRANCH_MAX_LEN, bỏ gạch nối dư ở cuối
+          SAFE_BRANCH=$(echo "$RAW_BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's#[^a-z0-9]+#-#g' | cut -c1-${BRANCH_MAX_LEN} | sed 's/-*$//')
           THEME_NAME="${THEME_PREFIX}${SAFE_BRANCH}"
 
           echo "Branch: $RAW_BRANCH → Theme: $THEME_NAME"
