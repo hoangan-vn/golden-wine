@@ -83,6 +83,10 @@ jobs:
           echo "Branch: $RAW_BRANCH → Theme: $THEME_NAME"
           echo "THEME_NAME=$THEME_NAME" >> $GITHUB_ENV
 
+          # Initialize HTTP status holder to avoid unbound variable with `set -u`
+          LAST_HTTP_STATUS=0
+          export LAST_HTTP_STATUS
+
           # Function to make API calls with retry
           make_api_call() {
             local method=$1
