@@ -21,7 +21,7 @@ jobs:
       - name: Validate required secrets
         run: |
           missing_secrets=()
-          
+
           if [[ -z "${{ secrets.SHOPIFY_STORE }}" ]]; then
             missing_secrets+=("SHOPIFY_STORE")
           fi
@@ -31,7 +31,7 @@ jobs:
           if [[ -z "${{ secrets.SHOPIFY_THEME_ACCESS_PASSWORD }}" ]]; then
             missing_secrets+=("SHOPIFY_THEME_ACCESS_PASSWORD")
           fi
-          
+
           if [ ${#missing_secrets[@]} -gt 0 ]; then
             echo "❌ Missing required secrets:"
             printf '   - %s\n' "${missing_secrets[@]}"
@@ -40,7 +40,7 @@ jobs:
             echo "Repository Settings → Secrets and variables → Actions"
             exit 1
           fi
-          
+
           echo "✅ All required secrets are configured"
 
       - name: Install dependencies
@@ -58,18 +58,28 @@ jobs:
           PR_ACTION: ${{ github.event.action }}
         run: |
           set -euo pipefail
-          
+
           # Debug environment variables
           echo "Store Domain: $STORE_DOMAIN"
           echo "Admin Token length: ${#ADMIN_TOKEN}"
           echo "PR Action: $PR_ACTION"
-          
+
+          # Normalize store domain to <store>.myshopify.com and strip any scheme/path
+          RAW_STORE="$STORE_DOMAIN"
+          CLEAN_STORE=$(echo "$RAW_STORE" | sed -E 's#^https?://##; s#/.*$##')
+          if [[ "$CLEAN_STORE" != *.* ]]; then
+            CLEAN_STORE="${CLEAN_STORE}.myshopify.com"
+          fi
+          API_BASE="https://${CLEAN_STORE}/admin/api/2024-10"
+          echo "Normalized Store Domain: $CLEAN_STORE"
+          echo "NORMALIZED_STORE_DOMAIN=$CLEAN_STORE" >> $GITHUB_ENV
+
           RAW_BRANCH="${GITHUB_HEAD_REF}"
           # Truncate and sanitize branch name (max 50 chars for Shopify)
           SAFE_BRANCH=$(echo "$RAW_BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's#[^a-z0-9]+#-#g' | cut -c1-50 | sed 's/-*$//')
           THEME_PREFIX="gh-preview-"
           THEME_NAME="${THEME_PREFIX}${SAFE_BRANCH}"
-          
+
           echo "Branch: $RAW_BRANCH → Theme: $THEME_NAME"
           echo "THEME_NAME=$THEME_NAME" >> $GITHUB_ENV
 
@@ -85,15 +95,17 @@ jobs:
             
             while [ $retry_count -lt $max_retries ]; do
               if [ -n "$data" ]; then
-                response=$(curl -s -w "\n%{http_code}" -X "$method" \
-                  "https://${STORE_DOMAIN}/admin/api/2024-10/$url" \
+                response=$(curl -sS -w "\n%{http_code}" -X "$method" \
+                  "${API_BASE}/$url" \
                   -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}" \
                   -H "Content-Type: application/json" \
+                  --connect-timeout 10 --max-time 60 --retry 3 --retry-delay 2 --retry-all-errors \
                   -d "$data")
               else
-                response=$(curl -s -w "\n%{http_code}" -X "$method" \
-                  "https://${STORE_DOMAIN}/admin/api/2024-10/$url" \
-                  -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}")
+                response=$(curl -sS -w "\n%{http_code}" -X "$method" \
+                  "${API_BASE}/$url" \
+                  -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}" \
+                  --connect-timeout 10 --max-time 60 --retry 3 --retry-delay 2 --retry-all-errors)
               fi
               
               body=$(echo "$response" | head -n -1)
@@ -104,13 +116,15 @@ jobs:
               # Debug info for 000 status
               if [ "$status" = "000" ]; then
                 echo "❌ Connection failed. Debugging info:"
-                echo "Store Domain: ${STORE_DOMAIN}"
-                echo "Full URL: https://${STORE_DOMAIN}/admin/api/2024-10/$url"
+                echo "Store Domain: ${CLEAN_STORE}"
+                echo "Full URL: ${API_BASE}/$url"
                 echo "Token length: ${#ADMIN_TOKEN}"
                 
                 # Test basic connectivity
                 echo "Testing basic connectivity..."
-                curl -s -I "https://${STORE_DOMAIN}" || echo "Basic connection test failed"
+                curl -sSI --connect-timeout 5 --max-time 10 "https://${CLEAN_STORE}" || echo "Basic connection test failed"
+                echo "Testing Admin API base URL..."
+                curl -sSI --connect-timeout 5 --max-time 10 "${API_BASE}" || echo "Admin API base connectivity failed"
               fi
               
               if [ "$status" -eq 429 ]; then
@@ -183,14 +197,14 @@ jobs:
       - name: Push theme to Shopify
         if: github.event.action != 'closed'
         env:
-          SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}
+          SHOPIFY_STORE: ${{ env.NORMALIZED_STORE_DOMAIN }}
           SHOPIFY_THEME_ACCESS_PASSWORD: ${{ secrets.SHOPIFY_THEME_ACCESS_PASSWORD }}
           THEME_ID: ${{ env.THEME_ID }}
         run: |
           export SHOPIFY_CLI_TTY=0
-          
+
           echo "Pushing theme files to Shopify..."
-          
+
           shopify theme push \
             --store "$SHOPIFY_STORE" \
             --password "$SHOPIFY_THEME_ACCESS_PASSWORD" \
@@ -210,13 +224,13 @@ jobs:
           header: shopify-preview
           message: |
             ## 🛍️ Shopify Theme Preview
-            
+
             ✅ **Preview is ready!**
-            
+
             🔗 **Preview Link**: https://${{ secrets.SHOPIFY_STORE }}/?preview_theme_id=${{ env.THEME_ID }}
-            
+
             📝 **Theme Name**: `${{ env.THEME_NAME }}`
-            
+
             ---
             *This preview will be automatically cleaned up when the PR is closed.*
 
@@ -227,8 +241,8 @@ jobs:
           header: shopify-preview
           message: |
             ## 🛍️ Shopify Theme Preview - Cleaned Up
-            
+
             ✅ Preview theme has been automatically deleted since this PR was closed.
-            
+
             ---
             *Theme cleanup completed.*
