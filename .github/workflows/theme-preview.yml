@@ -2,7 +2,7 @@ name: Shopify Theme Preview
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, closed]
 
 permissions:
   contents: read
@@ -12,61 +12,152 @@ jobs:
   preview:
     runs-on: ubuntu-latest
     if: ${{ !github.event.pull_request.head.repo.fork }}
-    environment: shopify
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Validate required secrets
+        run: |
+          if [[ -z "${{ secrets.SHOPIFY_STORE }}" ]]; then
+            echo "❌ SHOPIFY_STORE secret is missing"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.SHOPIFY_ADMIN_API_TOKEN }}" ]]; then
+            echo "❌ SHOPIFY_ADMIN_API_TOKEN secret is missing"
+            exit 1
+          fi
+          if [[ -z "${{ secrets.SHOPIFY_THEME_ACCESS_PASSWORD }}" ]]; then
+            echo "❌ SHOPIFY_THEME_ACCESS_PASSWORD secret is missing"
+            exit 1
+          fi
+
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y jq
-          npm i -g @shopify/cli @shopify/cli-theme
+          sudo apt-get install -y jq curl
+          npm i -g @shopify/cli@latest @shopify/theme@latest
 
-      - name: Get or Create Theme in Shopify
+      - name: Handle Theme Lifecycle
         id: theme
         env:
           STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE }}
           ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_API_TOKEN }}
+          PR_ACTION: ${{ github.event.action }}
         run: |
+          set -euo pipefail
+          
           RAW_BRANCH="${GITHUB_HEAD_REF}"
-          SAFE_BRANCH=$(echo "$RAW_BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's#[^a-z0-9]+#-#g')
+          # Truncate and sanitize branch name (max 50 chars for Shopify)
+          SAFE_BRANCH=$(echo "$RAW_BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's#[^a-z0-9]+#-#g' | cut -c1-50 | sed 's/-*$//')
+          THEME_PREFIX="gh-preview-"
+          THEME_NAME="${THEME_PREFIX}${SAFE_BRANCH}"
+          
+          echo "Branch: $RAW_BRANCH → Theme: $THEME_NAME"
+          echo "THEME_NAME=$THEME_NAME" >> $GITHUB_ENV
 
-          echo "Branch name: $RAW_BRANCH (safe: $SAFE_BRANCH)"
-          echo "STORE_DOMAIN=${STORE_DOMAIN}"
-          echo "ADMIN_TOKEN length=${#ADMIN_TOKEN}"
+          # Function to make API calls with retry
+          make_api_call() {
+            local method=$1
+            local url=$2
+            local data=$3
+            local max_retries=3
+            local retry_count=0
+            
+            while [ $retry_count -lt $max_retries ]; do
+              if [ -n "$data" ]; then
+                response=$(curl -s -w "\n%{http_code}" -X "$method" \
+                  "https://${STORE_DOMAIN}/admin/api/2024-07/$url" \
+                  -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}" \
+                  -H "Content-Type: application/json" \
+                  -d "$data")
+              else
+                response=$(curl -s -w "\n%{http_code}" -X "$method" \
+                  "https://${STORE_DOMAIN}/admin/api/2024-07/$url" \
+                  -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}")
+              fi
+              
+              body=$(echo "$response" | head -n -1)
+              status=$(echo "$response" | tail -n1)
+              
+              echo "API Call: $method $url - Status: $status"
+              
+              if [ "$status" -eq 429 ]; then
+                echo "Rate limited, waiting..."
+                sleep $((2 ** retry_count))
+                retry_count=$((retry_count + 1))
+                continue
+              fi
+              
+              echo "$body"
+              return $status
+            done
+            
+            echo "Max retries exceeded"
+            return 1
+          }
 
-          THEMES=$(curl -s -X GET \
-            "https://${STORE_DOMAIN}/admin/api/2024-07/themes.json" \
-            -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}")
-
-          echo "Existing themes: $(echo "$THEMES" | jq '.themes | length')"
-
-          THEME_ID=$(echo "$THEMES" | jq -r ".themes[] | select(.name==\"$SAFE_BRANCH\") | .id")
-
-          if [ -z "$THEME_ID" ] || [ "$THEME_ID" = "null" ]; then
-            echo "No theme found for branch, creating new..."
-            THEME_ID=$(curl -s -X POST \
-              "https://${STORE_DOMAIN}/admin/api/2024-07/themes.json" \
-              -H "X-Shopify-Access-Token: ${ADMIN_TOKEN}" \
-              -H "Content-Type: application/json" \
-              -d "{\"theme\":{\"name\":\"$SAFE_BRANCH\",\"role\":\"unpublished\"}}" \
-              | jq -r ".theme.id")
+          # If PR is closed, delete the preview theme
+          if [ "$PR_ACTION" = "closed" ]; then
+            echo "PR closed, cleaning up preview theme..."
+            
+            themes_response=$(make_api_call "GET" "themes.json" "")
+            if [ $? -eq 200 ]; then
+              theme_id=$(echo "$themes_response" | jq -r ".themes[] | select(.name==\"$THEME_NAME\") | .id")
+              
+              if [ -n "$theme_id" ] && [ "$theme_id" != "null" ]; then
+                echo "Deleting theme ID: $theme_id"
+                delete_response=$(make_api_call "DELETE" "themes/$theme_id.json" "")
+                if [ $? -eq 200 ]; then
+                  echo "✅ Preview theme cleaned up successfully"
+                else
+                  echo "⚠️ Failed to delete theme, but continuing..."
+                fi
+              fi
+            fi
+            exit 0
           fi
 
-          echo "SAFE_BRANCH=$SAFE_BRANCH" >> $GITHUB_ENV
-          echo "THEME_ID=$THEME_ID" >> $GITHUB_ENV
-          echo "Resolved THEME_ID=$THEME_ID"
+          # Get existing themes
+          themes_response=$(make_api_call "GET" "themes.json" "")
+          if [ $? -ne 200 ]; then
+            echo "❌ Failed to fetch themes: $themes_response"
+            exit 1
+          fi
+
+          # Check if theme already exists
+          theme_id=$(echo "$themes_response" | jq -r ".themes[] | select(.name==\"$THEME_NAME\") | .id")
+
+          if [ -z "$theme_id" ] || [ "$theme_id" = "null" ]; then
+            echo "Creating new theme: $THEME_NAME"
+            
+            create_data="{\"theme\":{\"name\":\"$THEME_NAME\",\"role\":\"unpublished\"}}"
+            create_response=$(make_api_call "POST" "themes.json" "$create_data")
+            
+            if [ $? -ne 201 ]; then
+              echo "❌ Failed to create theme: $create_response"
+              exit 1
+            fi
+            
+            theme_id=$(echo "$create_response" | jq -r ".theme.id")
+            echo "✅ Created new theme with ID: $theme_id"
+          else
+            echo "✅ Found existing theme with ID: $theme_id"
+          fi
+
+          echo "THEME_ID=$theme_id" >> $GITHUB_ENV
 
       - name: Push theme to Shopify
+        if: github.event.action != 'closed'
         env:
           SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}
           SHOPIFY_THEME_ACCESS_PASSWORD: ${{ secrets.SHOPIFY_THEME_ACCESS_PASSWORD }}
           THEME_ID: ${{ env.THEME_ID }}
         run: |
           export SHOPIFY_CLI_TTY=0
-          echo "Pushing theme $THEME_ID to store $SHOPIFY_STORE..."
+          
+          echo "Pushing theme files to Shopify..."
+          
           shopify theme push \
             --store "$SHOPIFY_STORE" \
             --password "$SHOPIFY_THEME_ACCESS_PASSWORD" \
@@ -74,12 +165,37 @@ jobs:
             --path "." \
             --json \
             --no-color \
+            --nodelete \
             --skip-deploy-confirmation
+            
+          echo "✅ Theme push completed"
 
       - name: Comment Preview Link on PR
+        if: github.event.action != 'closed'
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: shopify-preview
           message: |
-            ✅ Shopify preview for this branch:
-            🔗 https://${{ secrets.SHOPIFY_STORE }}/?preview_theme_id=${{ env.THEME_ID }}
+            ## 🛍️ Shopify Theme Preview
+            
+            ✅ **Preview is ready!**
+            
+            🔗 **Preview Link**: https://${{ secrets.SHOPIFY_STORE }}/?preview_theme_id=${{ env.THEME_ID }}
+            
+            📝 **Theme Name**: `${{ env.THEME_NAME }}`
+            
+            ---
+            *This preview will be automatically cleaned up when the PR is closed.*
+
+      - name: Comment cleanup notification
+        if: github.event.action == 'closed'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: shopify-preview
+          message: |
+            ## 🛍️ Shopify Theme Preview - Cleaned Up
+            
+            ✅ Preview theme has been automatically deleted since this PR was closed.
+            
+            ---
+            *Theme cleanup completed.*
