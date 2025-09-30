@@ -1,4 +1,3 @@
-```sh
 #!/bin/bash
 
 # Đường dẫn đến file Python
@@ -20,4 +19,3 @@ fi
 
 # Chạy Python script
 python3 "$SCRIPT_PATH" "$INPUT_FILE" "$OUTPUT_FILE" "$NEW_STOCK"
-```
