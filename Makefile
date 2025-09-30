@@ -28,10 +28,10 @@ update-inventory: run
 
 # Shopify helpers (optional; set STORE env var)
 shopify-dev:
-	shopify theme dev --store $$STORE
+	shopify theme dev --store syx10i-mq.myshopify.com
 
 shopify-push:
-	shopify theme push --store $$STORE
+	shopify theme push --store syx10i-mq.myshopify.com
 
 # Pull latest repo changes
 git-pull:
@@ -39,4 +39,4 @@ git-pull:
 
 # Pull theme from the store (use STORE env var)
 shopify-pull:
-	shopify theme pull --store $$STORE
+	shopify theme pull --store syx10i-mq.myshopify.com
