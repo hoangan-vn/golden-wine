@@ -1,0 +1,88 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+
+<div class="page-width">
+  <div class="title-bar" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
+    <h1 id="catalog-title" class="title title--primary" style="margin:0;">Catalog</h1>
+    <div>
+      <label for="catalog-category" class="visually-hidden">Chọn danh mục</label>
+      <select id="catalog-category" style="min-width:220px;">
+        {%- for collection in collections -%}
+          <option value="{{ collection.handle }}">{{ collection.title }}</option>
+        {%- endfor -%}
+      </select>
+    </div>
+  </div>
+
+  <div id="catalog-grid" class="grid grid--2-col-tablet-down grid--4-col-desktop" style="margin-top: 16px;"></div>
+</div>
+
+<script>
+  (function() {
+    var selectEl = document.getElementById('catalog-category');
+    var titleEl = document.getElementById('catalog-title');
+    var gridEl = document.getElementById('catalog-grid');
+
+    // Build handle -> title map from options
+    var collectionMap = {};
+    Array.prototype.forEach.call(selectEl.options, function(opt) {
+      collectionMap[opt.value] = opt.text;
+    });
+
+    function getSelectedHandle() {
+      var params = new URLSearchParams(window.location.search);
+      var handle = params.get('c');
+      if (!handle || !collectionMap[handle]) {
+        handle = selectEl.options.length ? selectEl.options[0].value : '';
+      }
+      return handle;
+    }
+
+    function setSelectedHandle(handle) {
+      if (!handle) return;
+      selectEl.value = handle;
+      titleEl.textContent = collectionMap[handle] || 'Catalog';
+      var params = new URLSearchParams(window.location.search);
+      params.set('c', handle);
+      var newUrl = window.location.pathname + '?' + params.toString() + window.location.hash;
+      window.history.replaceState({}, '', newUrl);
+    }
+
+    function renderLoading() {
+      gridEl.innerHTML = '<div class="loading-overlay gradient" style="width:100%;min-height:120px;"></div>';
+    }
+
+    function loadCollection(handle) {
+      if (!handle) {
+        gridEl.innerHTML = '';
+        return;
+      }
+      renderLoading();
+      fetch('/collections/' + encodeURIComponent(handle) + '?view=catalog-grid', { credentials: 'same-origin' })
+        .then(function(r){ return r.text(); })
+        .then(function(html){ gridEl.innerHTML = html; })
+        .catch(function(){ gridEl.innerHTML = '<p>Không thể tải sản phẩm.</p>'; });
+    }
+
+    selectEl.addEventListener('change', function(e) {
+      var handle = e.target.value;
+      setSelectedHandle(handle);
+      loadCollection(handle);
+    });
+
+    // Init from URL or default first option
+    var initialHandle = getSelectedHandle();
+    setSelectedHandle(initialHandle);
+    loadCollection(initialHandle);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Catalog",
+  "tag": "section",
+  "class": "section",
+  "settings": []
+}
+{% endschema %}
+
+
