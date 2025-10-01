@@ -25,7 +25,7 @@
     <div class="catalog-card__content">
       <h3 class="catalog-card__title">{{ product.title }}</h3>
       <div class="catalog-card__description">
-        {{ product.description | strip_html | truncate: 120 }}
+        {{ product.description }}
       </div>
       <div class="catalog-card__price">
         <span>{{ product.price | money }}</span>

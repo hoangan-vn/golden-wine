@@ -1,13 +1,13 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 
 <div class="page-width">
-  <div class="title-bar catalog-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+  <div class="title-bar catalog-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-top:32px;">
     <div class="catalog-head__left" style="flex:1 1 auto;">
       <div class="catalog-head__row" style="display:flex; align-items:center; gap:12px;">
-        <h1 id="catalog-title" class="catalog-head__title title title--primary" style="margin:0;">Catalog</h1>
+        <h1 id="catalog-title" class="catalog-head__title title title--primary" style="margin:0; font-size:2.4rem;">Goldenwine Catalog</h1>
         <span class="catalog-head__line" style="display:block; height:2px; background:#d8c9a3; flex:1 1 auto; opacity:.8;"></span>
       </div>
-      <div id="catalog-subtitle" class="catalog-head__subtitle" style="font-size:12px; color:#6b6b6b; margin-top:6px;"></div>
+      <div id="catalog-subtitle" class="catalog-head__subtitle" style="font-size:1.1rem; color:#6b6b6b; margin-top:10px;"></div>
     </div>
     <div class="catalog-head__controls">
       <label for="catalog-category" class="visually-hidden">Chọn danh mục</label>
@@ -22,6 +22,15 @@
   </div>
 
   <div id="catalog-grid" class="grid grid--2-col-tablet-down grid--4-col-desktop" style="margin-top: 16px;"></div>
+
+  <div class="catalog-nav" style="display:flex; justify-content:space-between; align-items:center; gap:16px; padding: 12px; margin-top: 12px;">
+    <button id="catalog-prev" type="button" class="catalog-nav__btn" style="background:#fff; border:1px solid #ddd; border-radius:8px; padding:10px 14px; cursor:pointer;">
+      <span style="margin-right:6px;">&larr;</span> {{ 'catalog_nav.prev' | t }}
+    </button>
+    <button id="catalog-next" type="button" class="catalog-nav__btn" style="background:#fff; border:1px solid #ddd; border-radius:8px; padding:10px 14px; cursor:pointer;">
+      {{ 'catalog_nav.next' | t }} <span style="margin-left:6px;">&rarr;</span>
+    </button>
+  </div>
 </div>
 
 <script>
@@ -31,6 +40,8 @@
     var subtitleEl = document.getElementById('catalog-subtitle');
     var gridEl = document.getElementById('catalog-grid');
     var errorEl = document.getElementById('catalog-error');
+    var prevBtn = document.getElementById('catalog-prev');
+    var nextBtn = document.getElementById('catalog-next');
 
     // Build handle -> title map from options
     var collectionMap = {};
@@ -42,7 +53,13 @@
       var params = new URLSearchParams(window.location.search);
       var handle = params.get('c');
       if (!handle || !collectionMap[handle]) {
-        handle = '';
+        // Fallback to first non-empty option (skip placeholder)
+        var firstValid = '';
+        for (var i = 0; i < selectEl.options.length; i++) {
+          var val = selectEl.options[i].value;
+          if (val && collectionMap[val]) { firstValid = val; break; }
+        }
+        handle = firstValid;
       }
       return handle;
     }
@@ -83,10 +100,39 @@
     }
 
     selectEl.addEventListener('change', function(e) {
-      var handle = e.target.value;
+      var chosen = e.target.value;
+      if (!chosen) {
+        // auto-select first valid if user picks placeholder
+        chosen = getSelectedHandle();
+      }
+      setSelectedHandle(chosen);
+      loadCollection(chosen);
+    });
+
+    function getValidOptions() {
+      var list = [];
+      for (var i = 0; i < selectEl.options.length; i++) {
+        var v = selectEl.options[i].value;
+        if (v && collectionMap[v]) list.push(v);
+      }
+      return list;
+    }
+
+    function navigate(step) {
+      var options = getValidOptions();
+      if (!options.length) return;
+      var current = selectEl.value && collectionMap[selectEl.value] ? selectEl.value : options[0];
+      var idx = Math.max(0, options.indexOf(current));
+      var nextIdx = idx + step;
+      if (nextIdx < 0) nextIdx = options.length - 1; // vòng lại cuối
+      if (nextIdx >= options.length) nextIdx = 0; // vòng lại đầu
+      var handle = options[nextIdx];
       setSelectedHandle(handle);
       loadCollection(handle);
-    });
+    }
+
+    prevBtn.addEventListener('click', function(){ navigate(-1); });
+    nextBtn.addEventListener('click', function(){ navigate(1); });
 
     // Init from URL or default first option
     var initialHandle = getSelectedHandle();
