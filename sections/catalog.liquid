@@ -1,15 +1,23 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 
 <div class="page-width">
-  <div class="title-bar" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
-    <h1 id="catalog-title" class="title title--primary" style="margin:0;">Catalog</h1>
-    <div>
+  <div class="title-bar catalog-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px;">
+    <div class="catalog-head__left" style="flex:1 1 auto;">
+      <div class="catalog-head__row" style="display:flex; align-items:center; gap:12px;">
+        <h1 id="catalog-title" class="catalog-head__title title title--primary" style="margin:0;">Catalog</h1>
+        <span class="catalog-head__line" style="display:block; height:2px; background:#d8c9a3; flex:1 1 auto; opacity:.8;"></span>
+      </div>
+      <div id="catalog-subtitle" class="catalog-head__subtitle" style="font-size:12px; color:#6b6b6b; margin-top:6px;"></div>
+    </div>
+    <div class="catalog-head__controls">
       <label for="catalog-category" class="visually-hidden">Chọn danh mục</label>
-      <select id="catalog-category" style="min-width:220px;">
+      <select id="catalog-category" class="catalog-select" style="min-width:220px;">
+        <option value="">Chọn danh mục</option>
         {%- for collection in collections -%}
           <option value="{{ collection.handle }}">{{ collection.title }}</option>
         {%- endfor -%}
       </select>
+      <div id="catalog-error" class="catalog-error" style="display:none; margin-top:6px; font-size:12px; color:#d32f2f;">Vui lòng chọn danh mục.</div>
     </div>
   </div>
 
@@ -20,7 +28,9 @@
   (function() {
     var selectEl = document.getElementById('catalog-category');
     var titleEl = document.getElementById('catalog-title');
+    var subtitleEl = document.getElementById('catalog-subtitle');
     var gridEl = document.getElementById('catalog-grid');
+    var errorEl = document.getElementById('catalog-error');
 
     // Build handle -> title map from options
     var collectionMap = {};
@@ -32,18 +42,23 @@
       var params = new URLSearchParams(window.location.search);
       var handle = params.get('c');
       if (!handle || !collectionMap[handle]) {
-        handle = selectEl.options.length ? selectEl.options[0].value : '';
+        handle = '';
       }
       return handle;
     }
 
     function setSelectedHandle(handle) {
-      if (!handle) return;
-      selectEl.value = handle;
-      titleEl.textContent = collectionMap[handle] || 'Catalog';
+      selectEl.value = handle || '';
+      // Keep main title as-is; update subtitle to current selection
+      subtitleEl.textContent = collectionMap[handle] || '';
       var params = new URLSearchParams(window.location.search);
-      params.set('c', handle);
-      var newUrl = window.location.pathname + '?' + params.toString() + window.location.hash;
+      if (handle) {
+        params.set('c', handle);
+      } else {
+        params.delete('c');
+      }
+      var qs = params.toString();
+      var newUrl = window.location.pathname + (qs ? ('?' + qs) : '') + window.location.hash;
       window.history.replaceState({}, '', newUrl);
     }
 
@@ -54,8 +69,12 @@
     function loadCollection(handle) {
       if (!handle) {
         gridEl.innerHTML = '';
+        errorEl.style.display = 'block';
+        selectEl.classList.add('catalog-select--error');
         return;
       }
+      errorEl.style.display = 'none';
+      selectEl.classList.remove('catalog-select--error');
       renderLoading();
       fetch('/collections/' + encodeURIComponent(handle) + '?view=catalog-grid', { credentials: 'same-origin' })
         .then(function(r){ return r.text(); })
