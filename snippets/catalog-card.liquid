@@ -28,7 +28,7 @@
         {{ product.description | strip_html | truncate: 120 }}
       </div>
       <div class="catalog-card__price">
-        {%- render 'price', product: product -%}
+        <span>{{ product.price | money }}</span>
       </div>
     </div>
   </a>
