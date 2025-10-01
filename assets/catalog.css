@@ -31,7 +31,8 @@
 /* Image */
 .catalog-card__image-wrapper {
     width: 100%;
-    aspect-ratio: 4/5; /* uniform image block for all items */
+    height: 55%; /* occupy 55% of card height */
+    aspect-ratio: unset; /* override previous ratio to use fixed height */
     display: flex;
     justify-content: center;
     align-items: center;
