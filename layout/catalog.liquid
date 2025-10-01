@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>Golden Wine | Catalog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ 'component-card.css' | asset_url | stylesheet_tag }}
+  {{ 'catalog.css' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
+<body>
+  <header>
+    <h1>Golden Wine Catalog</h1>
+    <div>
+      <label for="catalog-category" style="margin-right:8px;">Danh mục:</label>
+      <select id="catalog-category"></select>
+    </div>
+  </header>
+
+  <main class="catalog-container">
+    {% section 'catalog' %}
+  </main>
+
+  <footer>
+    &copy; {{ 'now' | date: "%Y" }} Golden Wine. All rights reserved.
+  </footer>
+
+  {{ content_for_footer }}
+</body>
+</html>
