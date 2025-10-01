@@ -146,13 +146,12 @@
     function equalizeCardHeights(){
       var cards = gridEl.querySelectorAll('.catalog-card');
       if (!cards.length) return;
-      // reset heights first
+      // Reset heights to natural to measure correctly
       Array.prototype.forEach.call(cards, function(c){ c.style.height = 'auto'; });
+      // Find tallest card in CURRENT CATEGORY (entire grid)
       var maxH = 0;
-      Array.prototype.forEach.call(cards, function(c){
-        var h = c.offsetHeight;
-        if (h > maxH) maxH = h;
-      });
+      Array.prototype.forEach.call(cards, function(c){ maxH = Math.max(maxH, c.offsetHeight); });
+      // Apply same height to all cards in this category
       Array.prototype.forEach.call(cards, function(c){ c.style.height = maxH + 'px'; });
     }
 
