@@ -23,6 +23,13 @@
     position: relative;
 }
 
+/* Make inner link fill card and become flex container */
+.catalog-card__link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 .catalog-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
