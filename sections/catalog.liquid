@@ -95,7 +95,16 @@
       renderLoading();
       fetch('/collections/' + encodeURIComponent(handle) + '?view=catalog-grid', { credentials: 'same-origin' })
         .then(function(r){ return r.text(); })
-        .then(function(html){ gridEl.innerHTML = html; })
+        .then(function(html){
+          gridEl.innerHTML = html;
+          // Equalize heights after content is inserted and images load
+          requestAnimationFrame(equalizeCardHeights);
+          Array.prototype.forEach.call(gridEl.querySelectorAll('img'), function(img){
+            if (img.complete) return;
+            img.addEventListener('load', equalizeCardHeights, { once: true });
+            img.addEventListener('error', equalizeCardHeights, { once: true });
+          });
+        })
         .catch(function(){ gridEl.innerHTML = '<p>Không thể tải sản phẩm.</p>'; });
     }
 
@@ -133,6 +142,25 @@
 
     prevBtn.addEventListener('click', function(){ navigate(-1); });
     nextBtn.addEventListener('click', function(){ navigate(1); });
+
+    function equalizeCardHeights(){
+      var cards = gridEl.querySelectorAll('.catalog-card');
+      if (!cards.length) return;
+      // reset heights first
+      Array.prototype.forEach.call(cards, function(c){ c.style.height = 'auto'; });
+      var maxH = 0;
+      Array.prototype.forEach.call(cards, function(c){
+        var h = c.offsetHeight;
+        if (h > maxH) maxH = h;
+      });
+      Array.prototype.forEach.call(cards, function(c){ c.style.height = maxH + 'px'; });
+    }
+
+    window.addEventListener('resize', function(){
+      // Debounce resize
+      clearTimeout(window.__catalogResizeTimer);
+      window.__catalogResizeTimer = setTimeout(equalizeCardHeights, 150);
+    });
 
     // Init from URL or default first option
     var initialHandle = getSelectedHandle();
