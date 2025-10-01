@@ -11,21 +11,9 @@
   {{ content_for_header }}
 </head>
 <body>
-  <header>
-    <h1>Golden Wine Catalog</h1>
-    <div>
-      <label for="catalog-category" style="margin-right:8px;">Danh mục:</label>
-      <select id="catalog-category"></select>
-    </div>
-  </header>
-
   <main class="catalog-container">
-    {% section 'catalog' %}
+    {{ content_for_layout }}
   </main>
-
-  <footer>
-    &copy; {{ 'now' | date: "%Y" }} Golden Wine. All rights reserved.
-  </footer>
 
   {{ content_for_footer }}
 </body>
