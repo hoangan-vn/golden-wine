@@ -19,8 +19,8 @@
     box-sizing: border-box;
     /* Responsive column width */
     flex: 1 1 100%;
-    /* let height grow with content so description can display fully */
-    height: auto;
+    /* fixed height to make all catalog items equal */
+    height: 620px;
     position: relative;
 }
 
@@ -39,7 +39,8 @@
 /* Image */
 .catalog-card__image-wrapper {
     width: 100%;
-    height: 55%; /* occupy 55% of card height */
+    /* fixed image area height to align cards */
+    height: 360px;
     aspect-ratio: unset; /* override previous ratio to use fixed height */
     display: flex;
     justify-content: center;
@@ -59,7 +60,8 @@
     padding: 16px;
     text-align: left;
     flex: 1 1 auto;
-    padding-bottom: 40px; /* smaller reserve space for price */
+    padding-bottom: 40px; /* reserve space for price */
+    overflow: hidden; /* avoid content spilling over fixed height */
 }
 
 .catalog-card__title {
@@ -75,7 +77,11 @@
     color: #666;
     margin-bottom: 12px;
     text-align: justify;
-    overflow: visible; /* allow full HTML content */
+    /* clamp description so cards stay equal height */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
 }
 
 .catalog-card__price {
@@ -105,6 +111,7 @@
     .catalog-card {
         flex-direction: column; /* keep image on top across breakpoints */
         align-items: stretch;
+        height: 640px; /* slightly taller on desktop */
     }
     .catalog-card__content {
         padding: 20px 18px;
@@ -114,6 +121,7 @@
 /* Tablet: 2 columns */
 @media (min-width: 576px) and (max-width: 991.98px) {
     .catalog-card {
+        height: 600px;
     }
 }
 
@@ -129,6 +137,8 @@
 }
 @media (max-width: 575.98px) {
     .catalog-grid { grid-template-columns: 1fr; }
+    .catalog-card { height: 580px; }
+    .catalog-card__image-wrapper { height: 320px; }
 }
 
 /* Pagination */
