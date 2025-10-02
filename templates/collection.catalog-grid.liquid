@@ -1,5 +1,5 @@
 {% layout 'catalog' %}
-{%- paginate collection.products by 1000 -%}
+{%- paginate collection.products by 250 -%}
   <link rel="stylesheet" href="{{ 'catalog.css' | asset_url }}" />
 
   <div class="catalog-grid">
@@ -12,5 +12,4 @@
     {%- endif -%}
   </div>
 
-  
 {%- endpaginate -%}

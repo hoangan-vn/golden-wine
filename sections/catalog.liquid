@@ -11,12 +11,20 @@
     </div>
     <div class="catalog-head__controls">
       <label for="catalog-category" class="visually-hidden">Chọn danh mục</label>
-      <select id="catalog-category" class="catalog-select" style="min-width:220px;">
+      <select id="catalog-category" class="catalog-select is-hidden" style="min-width:220px;">
         <option value="">Chọn danh mục</option>
         {%- for collection in collections -%}
           <option value="{{ collection.handle }}">{{ collection.title }}</option>
         {%- endfor -%}
       </select>
+      <div id="catalog-dropdown" class="catalog-dropdown" aria-expanded="false">
+        <button type="button" class="catalog-dropdown__button" aria-haspopup="listbox" aria-expanded="false">
+          <span class="catalog-dropdown__label">Chọn danh mục</span>
+          <span class="catalog-dropdown__chevron">▾</span>
+        </button>
+        <div class="catalog-dropdown__menu" role="listbox" aria-activedescendant="">
+        </div>
+      </div>
       <div id="catalog-error" class="catalog-error" style="display:none; margin-top:6px; font-size:12px; color:#d32f2f;">Vui lòng chọn danh mục.</div>
     </div>
   </div>
@@ -42,12 +50,26 @@
     var errorEl = document.getElementById('catalog-error');
     var prevBtn = document.getElementById('catalog-prev');
     var nextBtn = document.getElementById('catalog-next');
+    var dropdown = document.getElementById('catalog-dropdown');
+    var dropdownBtn = dropdown.querySelector('.catalog-dropdown__button');
+    var dropdownLabel = dropdown.querySelector('.catalog-dropdown__label');
+    var dropdownMenu = dropdown.querySelector('.catalog-dropdown__menu');
 
     // Build handle -> title map from options
     var collectionMap = {};
     Array.prototype.forEach.call(selectEl.options, function(opt) {
       collectionMap[opt.value] = opt.text;
     });
+
+    function buildDropdownFromSelect() {
+      var html = '';
+      for (var i = 0; i < selectEl.options.length; i++) {
+        var opt = selectEl.options[i];
+        if (!opt.value) continue;
+        html += '<div class="catalog-dropdown__item" role="option" data-value="' + opt.value + '">' + opt.text + '</div>';
+      }
+      dropdownMenu.innerHTML = html;
+    }
 
     function getSelectedHandle() {
       var params = new URLSearchParams(window.location.search);
@@ -68,6 +90,10 @@
       selectEl.value = handle || '';
       // Keep main title as-is; update subtitle to current selection
       subtitleEl.textContent = collectionMap[handle] || '';
+      dropdownLabel.textContent = collectionMap[handle] || 'Chọn danh mục';
+      Array.prototype.forEach.call(dropdownMenu.querySelectorAll('.catalog-dropdown__item'), function(el){
+        el.setAttribute('aria-selected', el.getAttribute('data-value') === handle ? 'true' : 'false');
+      });
       var params = new URLSearchParams(window.location.search);
       if (handle) {
         params.set('c', handle);
@@ -118,6 +144,23 @@
       loadCollection(chosen);
     });
 
+    function toggleDropdown(open) {
+      var willOpen = typeof open === 'boolean' ? open : dropdown.getAttribute('aria-expanded') !== 'true';
+      dropdown.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      dropdownBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    }
+
+    dropdownBtn.addEventListener('click', function(){ toggleDropdown(); });
+    document.addEventListener('click', function(e){ if (!dropdown.contains(e.target)) toggleDropdown(false); });
+    dropdownMenu.addEventListener('click', function(e){
+      var item = e.target.closest('.catalog-dropdown__item');
+      if (!item) return;
+      var value = item.getAttribute('data-value');
+      setSelectedHandle(value);
+      loadCollection(value);
+      toggleDropdown(false);
+    });
+
     function getValidOptions() {
       var list = [];
       for (var i = 0; i < selectEl.options.length; i++) {
@@ -162,6 +205,7 @@
     });
 
     // Init from URL or default first option
+    buildDropdownFromSelect();
     var initialHandle = getSelectedHandle();
     setSelectedHandle(initialHandle);
     loadCollection(initialHandle);
