@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>Golden Wine | Catalog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ 'component-card.css' | asset_url | stylesheet_tag }}
+  {{ 'catalog.css' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
+<body>
+  <main class="catalog-container">
+    {{ content_for_layout }}
+  </main>
+
+  {{ content_for_footer }}
+</body>
+</html>

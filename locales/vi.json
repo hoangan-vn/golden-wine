@@ -534,11 +534,15 @@
       "collapsed": "Đã thu nhỏ biểu mẫu người nhận thẻ quà tặng"
     }
   },
-  "age_gate":{
+  "age_gate": {
     "title": "VUI LÒNG XÁC NHẬN ĐỘ TUỔI CỦA BẠN!",
     "description": "GOLDEN WINE CHỈ GIỚI THIỆU SẢN PHẨM RƯỢU ĐẾN VỚI QUÝ KHÁCH HÀNG TRÊN 18 TUỔI.",
-    "confirm_button":  "TRÊN 18 TUỔI",
+    "confirm_button": "TRÊN 18 TUỔI",
     "deny_button": "CHƯA ĐỦ 18 TUỔI",
     "warning": "RẤT TIẾC, BẠN KHÔNG ĐỦ TUỔI ĐỂ TRUY CẬP TRANG WEB NÀY."
+  },
+  "catalog_nav": {
+    "prev": "Trang trước",
+    "next": "Trang sau"
   }
 }
