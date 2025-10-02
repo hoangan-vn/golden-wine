@@ -4,9 +4,9 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-INPUT_CSV_PATH = REPO_ROOT / ".data" / "inventory.csv"
-OUTPUT_CSV_PATH = REPO_ROOT / ".data" / "inventory_updated.csv"
-SKU_FIELD_NAME = "SKU"
+INPUT_CSV_PATH = REPO_ROOT / ".data" / "products.csv"
+OUTPUT_CSV_PATH = REPO_ROOT / ".data" / "products_updated.csv"
+SKU_FIELD_NAME = "Variant SKU"
 
 
 def load_csv_rows(csv_path: Path) -> tuple[list[dict], list[str]]:
@@ -81,9 +81,8 @@ def choose_row_for_sku(rows: list[dict], fieldnames: list[str], sku: str) -> int
         row = rows[row_index]
         title = row.get("Title", "")
         handle = row.get("Handle", "")
-        location = row.get("Location", "")
-        on_hand = row.get("On hand (current)", "")
-        print(f"{choice}. Handle='{handle}', Title='{title}', Location='{location}', On hand='{on_hand}'")
+        price = row.get("Variant Price", "")
+        print(f"{choice}. Handle='{handle}', Title='{title}', Variant Price='{price}'")
     print_divider()
 
     selected = select_index("Enter row number: ", 1, len(matched_indices))
@@ -166,3 +165,5 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\nReceived interrupt signal. Exiting without saving changes.")
         sys.exit(130)
+
+

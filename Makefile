@@ -1,10 +1,12 @@
-.PHONY: default help run update-inventory shopify-dev shopify-push git-pull shopify-pull
+.PHONY: default help run update-inventory shopify-dev shopify-push git-pull shopify-pull update-products
 
 # Python executable (override: make PY=python3)
 PY ?= python
 
 # Path to the inventory updater (override: make UPDATE_SCRIPT=path/to/file)
 UPDATE_SCRIPT ?= scripts/inventory/update.py
+# Path to the products updater (override: make PRODUCTS_UPDATE_SCRIPT=path/to/file)
+PRODUCTS_UPDATE_SCRIPT ?= scripts/products/update.py
 
 # Default target
 default: update-inventory
@@ -14,6 +16,7 @@ help:
 	@echo "Available targets:"
 	@echo "  make update-inventory - Run inventory updater ($(UPDATE_SCRIPT))"
 	@echo "  make run              - Alias of update-inventory"
+	@echo "  make update-products  - Run products updater ($(PRODUCTS_UPDATE_SCRIPT))"
 	@echo "  make shopify-dev   - Run Shopify theme dev (requires Shopify CLI)"
 	@echo "  make shopify-push  - Push theme to store (requires Shopify CLI)"
 	@echo "  make git-pull      - git pull from current branch"
@@ -25,6 +28,10 @@ run:
 
 # Alias
 update-inventory: run
+
+# Run the products update script (interactive)
+update-products:
+	$(PY) $(PRODUCTS_UPDATE_SCRIPT)
 
 # Shopify helpers (optional; set STORE env var)
 shopify-dev:

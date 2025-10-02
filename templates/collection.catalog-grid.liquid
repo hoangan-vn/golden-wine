@@ -1,0 +1,15 @@
+{% layout 'catalog' %}
+{%- paginate collection.products by 250 -%}
+  <link rel="stylesheet" href="{{ 'catalog.css' | asset_url }}" />
+
+  <div class="catalog-grid">
+    {%- if collection.products_count == 0 -%}
+      <p>Không có sản phẩm.</p>
+    {%- else -%}
+      {%- for product in collection.products -%}
+        {%- render 'catalog-card', product: product -%}
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+{%- endpaginate -%}
