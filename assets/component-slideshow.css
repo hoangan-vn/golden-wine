@@ -12,6 +12,13 @@ slideshow-component .slideshow.banner {
   overflow-y: hidden;
 }
 
+/* Chỉ điều chỉnh chiều cao, giữ nguyên width */
+.slideshow__media img {
+  height: auto;
+  object-fit: contain;
+  transform: none;
+}
+
 .slideshow__slide {
   padding: 0;
   position: relative;
@@ -20,16 +27,17 @@ slideshow-component .slideshow.banner {
   visibility: visible;
 }
 
+/* Để chiều cao tự động theo tỷ lệ ảnh, bỏ cố định height */
 @media screen and (max-width: 749px) {
   .slideshow--placeholder.banner--mobile-bottom.banner--adapt_image .slideshow__media,
   .slideshow--placeholder.banner--adapt_image:not(.banner--mobile-bottom) {
-    height: 28rem;
+    height: auto;
   }
 }
 
 @media screen and (min-width: 750px) {
   .slideshow--placeholder.banner--adapt_image {
-    height: 56rem;
+    height: auto;
   }
 }
 

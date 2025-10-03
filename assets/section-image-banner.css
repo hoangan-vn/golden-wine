@@ -5,6 +5,13 @@
   z-index: auto;
   isolation: isolate;
 }
+
+/* Chỉ điều chỉnh chiều cao cho ảnh banner, giữ nguyên width */
+.banner__media img {
+  height: auto;
+  object-fit: contain;
+  transform: none;
+}
 .h2__custom {
   font-size: 2.5vw;
   font-weight: 900;
@@ -170,17 +177,17 @@
 @media screen and (max-width: 749px) {
   .banner--small.banner--mobile-bottom:not(.banner--adapt) .banner__media,
   .banner--small.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
-    height: 28rem;
+    height: auto;
   }
 
   .banner--medium.banner--mobile-bottom:not(.banner--adapt) .banner__media,
   .banner--medium.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
-    height: 34rem;
+    height: auto;
   }
 
   .banner--large.banner--mobile-bottom:not(.banner--adapt) .banner__media,
   .banner--large.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
-    height: 39rem;
+    height: auto;
   }
 
   .banner--small:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
@@ -202,19 +209,15 @@
   }
 
   .banner--small:not(.banner--adapt) {
-    /* min-height: 42rem;
-     */
-    /* min-height: 20rem;
-     */
-     aspect-ratio: 9 / 1;
+    height: auto;
   }
 
   .banner--medium:not(.banner--adapt) {
-    min-height: 56rem;
+    height: auto;
   }
 
   .banner--large:not(.banner--adapt) {
-    min-height: 72rem;
+    height: auto;
   }
 
   .banner__content.banner__content--top-left {
