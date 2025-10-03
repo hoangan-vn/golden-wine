@@ -89,7 +89,6 @@ slideshow-component .slideshow.banner {
   }
 }
 
-
 .slideshow:not(.banner--mobile-bottom) .slideshow__text-wrapper {
   height: 100%;
 }
@@ -167,8 +166,6 @@ slideshow-component:not(.page-width) .slider-buttons {
     border-left: 0.1rem solid rgba(var(--color-foreground), 0.08);
   }
 }
-
-/* Remove custom placeholder height reductions (rollback) */
 
 .slideshow__autoplay .icon.icon-play,
 .slideshow__autoplay .icon.icon-pause {
