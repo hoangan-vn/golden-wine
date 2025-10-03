@@ -89,6 +89,21 @@ slideshow-component .slideshow.banner {
   }
 }
 
+/* Shrink only slideshow images inside the frame */
+@media screen and (min-width: 750px) {
+  .slideshow__media > img {
+    transform: scale(0.7);
+    transform-origin: center center;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .slideshow__media > img {
+    transform: scale(0.68);
+    transform-origin: center center;
+  }
+}
+
 .slideshow:not(.banner--mobile-bottom) .slideshow__text-wrapper {
   height: 100%;
 }
@@ -96,7 +111,7 @@ slideshow-component .slideshow.banner {
 @media screen and (min-width: 750px) {
   .slideshow__text-wrapper.banner__content {
     height: 100%;
-    padding: 3rem;
+    padding: 5rem;
   }
 }
 
@@ -131,12 +146,6 @@ slideshow-component .slideshow.banner {
 @media screen and (min-width: 750px) {
   .slideshow__controls {
     position: relative;
-  }
-
-  /* Reduce slideshow slide height on desktop for better fit */
-  .slideshow.banner.banner--large .slideshow__media,
-  .slideshow.banner.banner--medium .slideshow__media {
-    max-height: 50rem;
   }
 }
 
@@ -173,18 +182,7 @@ slideshow-component:not(.page-width) .slider-buttons {
   }
 }
 
-/* Reduce slideshow placeholder heights */
-@media screen and (max-width: 749px) {
-  .slideshow--placeholder.banner--adapt_image {
-    height: 24rem;
-  }
-}
-
-@media screen and (min-width: 750px) {
-  .slideshow--placeholder.banner--adapt_image {
-    height: 40rem;
-  }
-}
+/* Remove custom placeholder height reductions (rollback) */
 
 .slideshow__autoplay .icon.icon-play,
 .slideshow__autoplay .icon.icon-pause {
