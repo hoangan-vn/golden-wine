@@ -136,7 +136,7 @@ slideshow-component .slideshow.banner {
   /* Reduce slideshow slide height on desktop for better fit */
   .slideshow.banner.banner--large .slideshow__media,
   .slideshow.banner.banner--medium .slideshow__media {
-    max-height: 56rem;
+    max-height: 50rem;
   }
 }
 
@@ -182,7 +182,7 @@ slideshow-component:not(.page-width) .slider-buttons {
 
 @media screen and (min-width: 750px) {
   .slideshow--placeholder.banner--adapt_image {
-    height: 44rem;
+    height: 40rem;
   }
 }
 
