@@ -89,20 +89,6 @@ slideshow-component .slideshow.banner {
   }
 }
 
-/* Shrink only slideshow images inside the frame */
-@media screen and (min-width: 750px) {
-  .slideshow__media > img {
-    transform: scale(0.7);
-    transform-origin: center center;
-  }
-}
-
-@media screen and (max-width: 749px) {
-  .slideshow__media > img {
-    transform: scale(0.68);
-    transform-origin: center center;
-  }
-}
 
 .slideshow:not(.banner--mobile-bottom) .slideshow__text-wrapper {
   height: 100%;

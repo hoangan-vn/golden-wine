@@ -610,18 +610,3 @@
     color: currentColor;
   }
 }
-
-/* Shrink only the image inside banner without changing the outer frame */
-@media screen and (min-width: 750px) {
-  .banner__media > img {
-    transform: scale(0.7);
-    transform-origin: center center;
-  }
-}
-
-@media screen and (max-width: 749px) {
-  .banner__media > img {
-    transform: scale(0.68);
-    transform-origin: center center;
-  }
-}
