@@ -15,7 +15,7 @@
         "slide_hdFP6m": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/z6987468831396_eac11a1568fe616386c91abeb7b981dc.jpg",
+            "image": "shopify://shop_images/slide-01.png",
             "image_overlay_opacity": 0,
             "heading": "ĐỎ RỰC MAY MẮN THÁNG NÀY CÙNG PENFOLDS",
             "heading_size": "h2",
@@ -33,7 +33,7 @@
         "slide_bVnaDr": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/z6987468842338_d510ad5d9cd2e9a5356aaa0527fb3d66.jpg",
+            "image": "shopify://shop_images/slide-02.png",
             "image_overlay_opacity": 0,
             "heading": "PHIÊN BẢN GIỚI HẠN CỦA THÁNG TỪ NHÀ JOHNNIE WALKER",
             "heading_size": "h2",
@@ -51,7 +51,7 @@
         "slide_zFVG9h": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/z6987468874191_b670e45dbbb95a082788c563696990e3.jpg",
+            "image": "shopify://shop_images/slide-03.png",
             "image_overlay_opacity": 0,
             "heading": "ƯU ĐÃI ĐẶC BIỆT THÁNG NÀY",
             "heading_size": "h2",
@@ -257,8 +257,8 @@
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image": "shopify://shop_images/z6987290313498_9a2f1923ce188a3bc40e2210b7f7955b_23a862ae-9348-4890-ba40-3f056ad33942.jpg",
-        "image_2": "shopify://shop_images/z6987290313481_faa01e6be8f201858ed2403520da2003.jpg",
+        "image": "shopify://shop_images/sub-banner-1.png",
+        "image_2": "shopify://shop_images/sub-banner-2.png",
         "image_overlay_opacity": 0,
         "image_height": "small",
         "image_behavior": "ambient",

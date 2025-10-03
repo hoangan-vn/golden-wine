@@ -159,14 +159,16 @@
               {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
             {%- endif -%}
           {%- endif -%}
-          {%- if block.settings.heading != blank -%}
+          {%- comment -%}
+            Heading removed per request (hide slide text)
+            {%- if block.settings.heading != blank -%}
               <div class="box__h2__custom"> 
-                {% comment %} {{ block.settings.heading_size }} {% endcomment %}
                 <h2 class="h2__custom banner__heading inline-richtext h1">
                   {{ block.settings.heading }}
                 </h2>
               </div>
-          {%- endif -%}
+            {%- endif -%}
+          {%- endcomment -%}
         </div>
         {% comment %} <div class="box__h2__custom"> 
           {%- if block.settings.heading != blank -%}
@@ -183,25 +185,28 @@
               </h2>
             </div>
             {%- endif -%} {% endcomment %}
-            {%- if block.settings.subheading != blank -%}
-              <div class="banner__text rte">
-                <p>{{ block.settings.subheading }}</p>
-              </div>
-            {%- endif -%}
-            {%- if block.settings.button_label != blank -%}
-              <div class="banner__buttons__custom banner__buttons">
-                <a
-                  {% if block.settings.link %}
-                    href="{{ block.settings.link }}"
-                  {% else %}
-                    role="link" aria-disabled="true"
-                  {% endif %}
-                  class="button {% if block.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}"
-                >
-                  {{- block.settings.button_label | escape -}}
-                </a>
-              </div>
-            {%- endif -%}
+            {%- comment -%}
+              Subheading and button removed per request (hide slide text)
+              {%- if block.settings.subheading != blank -%}
+                <div class="banner__text rte">
+                  <p>{{ block.settings.subheading }}</p>
+                </div>
+              {%- endif -%}
+              {%- if block.settings.button_label != blank -%}
+                <div class="banner__buttons__custom banner__buttons">
+                  <a
+                    {% if block.settings.link %}
+                      href="{{ block.settings.link }}"
+                    {% else %}
+                      role="link" aria-disabled="true"
+                    {% endif %}
+                    class="button {% if block.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}"
+                  >
+                    {{- block.settings.button_label | escape -}}
+                  </a>
+                </div>
+              {%- endif -%}
+            {%- endcomment -%}
           {% comment %} <div class="slideshow__text banner__box content-container content-container--full-width-mobile color-{{ block.settings.color_scheme }} gradient slideshow__text--{{ block.settings.text_alignment }} slideshow__text-mobile--{{ block.settings.text_alignment_mobile }}">
             {%- if block.settings.heading != blank -%}
               <h2 class="banner__heading inline-richtext {{ block.settings.heading_size }}">
