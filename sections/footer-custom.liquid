@@ -63,9 +63,9 @@
 
     .footer-container > div {
       margin-bottom: 20px;
-      flex: none !important;
+      flex: 1 !important;
       max-width: none !important;
-      min-width: none !important;
+      min-width: 0 !important;
     }
 
     .social-icons {
@@ -118,15 +118,15 @@
 
 .footer-container > div {
   flex: 1;
-  max-width: 400px;
-  min-width: 300px;
+  max-width: none;
+  min-width: 0;
 }
 </style>
 
 <footer class="site-footer" style="padding-bottom: 0;">
   <div
     class="footer-container"
-    style="max-width: 1200px; margin: auto; padding: 40px 20px; display: flex; justify-content: center; gap: 4rem; font-size: 14px;"
+    style="max-width: 1200px; margin: auto; padding: 40px 20px; display: flex; justify-content: space-between; gap: 2rem; font-size: 14px;"
   >
     <!-- Column 1: Company Info -->
     <div>

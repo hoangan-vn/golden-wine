@@ -170,29 +170,29 @@
 @media screen and (max-width: 749px) {
   .banner--small.banner--mobile-bottom:not(.banner--adapt) .banner__media,
   .banner--small.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
-    height: 20rem;
+    height: 12rem;
   }
 
   .banner--medium.banner--mobile-bottom:not(.banner--adapt) .banner__media,
   .banner--medium.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
-    height: 25rem;
+    height: 15rem;
   }
 
   .banner--large.banner--mobile-bottom:not(.banner--adapt) .banner__media,
   .banner--large.banner--stacked:not(.banner--mobile-bottom):not(.banner--adapt) > .banner__media {
-    height: 30rem;
+    height: 18rem;
   }
 
   .banner--small:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
-    min-height: 20rem;
+    min-height: 12rem;
   }
 
   .banner--medium:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
-    min-height: 25rem;
+    min-height: 15rem;
   }
 
   .banner--large:not(.banner--mobile-bottom):not(.banner--adapt) .banner__content {
-    min-height: 30rem;
+    min-height: 18rem;
   }
 }
 
@@ -202,17 +202,17 @@
   }
 
   .banner--small:not(.banner--adapt) {
-    min-height: 25rem;
+    min-height: 15rem;
     aspect-ratio: 16 / 5;
   }
 
   .banner--medium:not(.banner--adapt) {
-    min-height: 35rem;
+    min-height: 21rem;
     aspect-ratio: 16 / 6;
   }
 
   .banner--large:not(.banner--adapt) {
-    min-height: 45rem;
+    min-height: 27rem;
     aspect-ratio: 16 / 7;
   }
 
