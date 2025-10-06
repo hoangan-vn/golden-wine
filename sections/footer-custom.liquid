@@ -55,13 +55,17 @@
 
   @media (max-width: 768px) {
     .footer-container {
-      grid-template-columns: 1fr !important;
+      flex-direction: column !important;
+      align-items: center !important;
       gap: 1.5rem !important;
       padding: 30px 16px !important;
     }
 
     .footer-container > div {
       margin-bottom: 20px;
+      flex: none !important;
+      max-width: none !important;
+      min-width: none !important;
     }
 
     .social-icons {
@@ -111,12 +115,18 @@
 .custom-info {
   margin: 0px;
 }
+
+.footer-container > div {
+  flex: 1;
+  max-width: 400px;
+  min-width: 300px;
+}
 </style>
 
 <footer class="site-footer" style="padding-bottom: 0;">
   <div
     class="footer-container"
-    style="max-width: 1200px; margin: auto; padding: 40px 20px; display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 2rem; font-size: 14px;"
+    style="max-width: 1200px; margin: auto; padding: 40px 20px; display: flex; justify-content: center; gap: 4rem; font-size: 14px;"
   >
     <!-- Column 1: Company Info -->
     <div>
