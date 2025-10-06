@@ -14,10 +14,11 @@
       "blocks": {
         "slide_hdFP6m": {
           "type": "slide",
+          "name": "Slide-01",
           "settings": {
             "image": "shopify://shop_images/slide-01.png",
             "image_overlay_opacity": 0,
-            "heading": "ĐỎ RỰC MAY MẮN THÁNG NÀY CÙNG PENFOLDS",
+            "heading": "",
             "heading_size": "h2",
             "subheading": "",
             "button_label": "Shop Now",
@@ -32,10 +33,11 @@
         },
         "slide_bVnaDr": {
           "type": "slide",
+          "name": "Slide-02",
           "settings": {
             "image": "shopify://shop_images/slide-02.png",
             "image_overlay_opacity": 0,
-            "heading": "PHIÊN BẢN GIỚI HẠN CỦA THÁNG TỪ NHÀ JOHNNIE WALKER",
+            "heading": "",
             "heading_size": "h2",
             "subheading": "",
             "button_label": "Shop Now",
@@ -50,10 +52,11 @@
         },
         "slide_zFVG9h": {
           "type": "slide",
+          "name": "Slide-03",
           "settings": {
             "image": "shopify://shop_images/slide-03.png",
             "image_overlay_opacity": 0,
-            "heading": "ƯU ĐÃI ĐẶC BIỆT THÁNG NÀY",
+            "heading": "",
             "heading_size": "h2",
             "subheading": "",
             "button_label": "Shop Now",
@@ -72,14 +75,15 @@
         "slide_bVnaDr",
         "slide_zFVG9h"
       ],
+      "custom_css": [],
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "full_bleed",
-        "slide_height": "large",
+        "slide_height": "adapt_image",
         "slider_visual": "dots",
         "auto_rotate": true,
         "change_slides_speed": 5,
-        "image_behavior": "ambient",
+        "image_behavior": "none",
         "show_text_below": true,
         "accessibility_info": ""
       }
@@ -216,27 +220,6 @@
     "image_banner_fA3DrH": {
       "type": "image-banner",
       "blocks": {
-        "heading_mdnrnP": {
-          "type": "heading",
-          "settings": {
-            "heading": "EXLORE THE WORLD OF",
-            "heading_add_2": "WINE & SPIRITS",
-            "heading_style": "",
-            "subheading": "Explore curated stories of alcohol inspiration",
-            "subheading_style": "",
-            "heading_size": "h1"
-          }
-        },
-        "heading_2_znD3QG": {
-          "type": "heading_2",
-          "settings": {
-            "heading_2": "BELOVED BESTSELLERS",
-            "heading_2_style": "",
-            "subheading_2": "Gift or self-treat, our top sips always hit the spot",
-            "subheading_2_style": "",
-            "heading_2_size": "h1"
-          }
-        },
         "buttons_YwQE68": {
           "type": "buttons",
           "disabled": true,
@@ -251,8 +234,6 @@
         }
       },
       "block_order": [
-        "heading_mdnrnP",
-        "heading_2_znD3QG",
         "buttons_YwQE68"
       ],
       "name": "t:sections.image-banner.presets.name",
@@ -260,7 +241,7 @@
         "image": "shopify://shop_images/sub-banner-1.png",
         "image_2": "shopify://shop_images/sub-banner-2.png",
         "image_overlay_opacity": 0,
-        "image_height": "small",
+        "image_height": "adapt",
         "image_behavior": "ambient",
         "desktop_content_position": "middle-center",
         "desktop_content_alignment": "center",
