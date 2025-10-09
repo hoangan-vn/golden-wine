@@ -1,3 +1,25 @@
+.article-template {
+  max-width: var(--page-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+@media screen and (min-width: 750px) {
+  .article-template {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .article-template {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+}
+
 .article-template > *:first-child:not(.article-template__hero-container) {
   margin-top: 5rem;
 }
