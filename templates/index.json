@@ -159,7 +159,7 @@
         "featured_collection_RatBAp": {
           "type": "featured_collection",
           "settings": {
-            "collection": "blended-whisky"
+            "collection": "whisky"
           }
         },
         "featured_collection_Le97ha": {
@@ -171,13 +171,13 @@
         "featured_collection_fwtC6c": {
           "type": "featured_collection",
           "settings": {
-            "collection": "frontpage"
+            "collection": "cognac"
           }
         },
         "featured_collection_FpqRyp": {
           "type": "featured_collection",
           "settings": {
-            "collection": "liqueur-tequila-1"
+            "collection": "liqueur-tequila"
           }
         },
         "featured_collection_GHGccq": {
@@ -225,7 +225,7 @@
           "disabled": true,
           "settings": {
             "button_label_1": "Click here",
-            "button_link_1": "shopify://collections/blended-whisky",
+            "button_link_1": "shopify://collections/whisky",
             "button_style_secondary_1": true,
             "button_label_2": "Click here",
             "button_link_2": "shopify://collections/vang-tay-ban-nha",
@@ -257,7 +257,7 @@
       "disabled": true,
       "name": "Sản Phẩm Nổi Bật",
       "settings": {
-        "collection": "sản-phẩm-ban-chạy",
+        "collection": "best-selling",
         "products_to_show": 8,
         "title": "SẢN PHẨM NỔI BẬT",
         "heading_size": "h2",
@@ -286,7 +286,7 @@
       "type": "featured-collection",
       "name": "Rượu Whisky",
       "settings": {
-        "collection": "blended-whisky",
+        "collection": "whisky",
         "products_to_show": 8,
         "title": "WHISKY",
         "heading_size": "h2",
@@ -315,7 +315,7 @@
       "type": "featured-collection",
       "name": "Rượu Cognac",
       "settings": {
-        "collection": "frontpage",
+        "collection": "cognac",
         "products_to_show": 8,
         "title": "COGNAC",
         "heading_size": "h2",

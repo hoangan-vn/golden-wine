@@ -23,7 +23,7 @@
         "featured_collection_MDXJyg": {
           "type": "featured_collection",
           "settings": {
-            "collection": "blended-whisky"
+            "collection": "whisky"
           }
         },
         "featured_collection_CgciLp": {
@@ -35,7 +35,7 @@
         "featured_collection_j7Etdp": {
           "type": "featured_collection",
           "settings": {
-            "collection": "frontpage"
+            "collection": "cognac"
           }
         },
         "featured_collection_XhexMb": {
@@ -47,7 +47,7 @@
         "featured_collection_mcdtKL": {
           "type": "featured_collection",
           "settings": {
-            "collection": "liqueur-tequila-1"
+            "collection": "liqueur-tequila"
           }
         },
         "featured_collection_TrkADe": {
