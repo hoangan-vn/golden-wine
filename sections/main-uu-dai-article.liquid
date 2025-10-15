@@ -1,0 +1,49 @@
+{%- comment -%}
+  Renders a single metaobject entry (detail page).
+  This uses the implicit metaobject context when used with a metaobject template.
+{%- endcomment -%}
+
+{%- liquid
+  assign title_field = section.settings.title_field | default: 'title'
+  assign image_field = section.settings.image_field | default: 'image'
+  assign content_field = section.settings.content_field | default: 'content'
+  assign entry = metaobject
+-%}
+
+<div class="page-width section-{{ section.id }}-padding">
+  {%- if entry and entry[title_field] -%}
+    <h1 class="title--primary">{{ entry[title_field] | escape }}</h1>
+  {%- endif -%}
+
+  <div class="grid grid--2-col-desktop grid--1-col-tablet-down">
+    <div class="grid__item">
+      {%- assign img = entry[image_field] -%}
+      {%- if img -%}
+        <img src="{{ img | img_url: '860x' }}" alt="{{ entry[title_field] | escape }}" loading="lazy" width="860" height="860">
+      {%- endif -%}
+    </div>
+    <div class="grid__item rte">
+      {{ entry[content_field] }}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Ưu đãi - Chi tiết (Metaobject)",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "title_field", "label": "Trường tiêu đề", "default": "title" },
+    { "type": "text", "id": "image_field", "label": "Trường ảnh", "default": "image" },
+    { "type": "text", "id": "content_field", "label": "Trường nội dung", "default": "content" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding trên", "default": 28 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding dưới", "default": 28 }
+  ],
+  "presets": [
+    { "name": "Ưu đãi - Chi tiết (Metaobject)", "category": "Custom" }
+  ]
+}
+{% endschema %}
+
+

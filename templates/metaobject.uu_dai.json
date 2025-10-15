@@ -1,0 +1,26 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+    "sections": {
+        "main": {
+            "type": "main-uu-dai-article",
+            "settings": {
+                "title_field": "title",
+                "image_field": "image",
+                "content_field": "content",
+                "padding_top": 12,
+                "padding_bottom": 36
+            }
+        }
+    },
+    "order": [
+        "main"
+    ]
+}

@@ -1,0 +1,154 @@
+{%- comment -%}
+  Renders a grid list of metaobject entries for a given type (default: uu_dai).
+  Configure the metaobject definition in Admin → Content → Metaobjects and
+  enable display pages for entries if you want detail pages.
+{%- endcomment -%}
+
+{%- liquid
+  assign metaobject_type_handle = section.settings.metaobject_type | default: 'uu_dai'
+  assign all_entries = shop.metaobjects[metaobject_type_handle].values
+  assign limit = section.settings.limit | default: 12
+  if all_entries
+    assign entries = all_entries | slice: 0, limit
+  endif
+-%}
+
+<div class="page-width section-{{ section.id }}-padding">
+  {%- if section.settings.title != blank -%}
+    <h1 class="title title--primary inline-richtext{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {{ section.settings.title }}
+    </h1>
+  {%- endif -%}
+
+  {%- if entries and entries.size > 0 -%}
+    <ul class="grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down" role="list">
+      {%- for entry in entries -%}
+        <li class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}data-cascade style="--animation-order: {{ forloop.index }};"{% endif %}>
+          <article class="card-wrapper">
+            {%- if entry.image != blank and entry.image != nil -%}
+              <div class="card__media">
+                <div class="media media--square">
+                  <img
+                    src="{{ entry.image | img_url: '540x' }}"
+                    srcset="{{ entry.image | img_url: '360x' }} 360w, {{ entry.image | img_url: '540x' }} 540w, {{ entry.image | img_url: '720x' }} 720w"
+                    sizes="(min-width: 990px) 25vw, 50vw"
+                    alt="{{ entry.title | default: section.settings.fallback_title | escape }}"
+                    loading="lazy"
+                    width="540" height="540"
+                  >
+                </div>
+              </div>
+            {%- endif -%}
+            <div class="card__content">
+              {%- if entry.title or entry.heading -%}
+                <h3 class="card__heading h5">
+                  <a href="{{ entry.system.url | default: '#' }}" class="full-unstyled-link">
+                    {{ entry.title | default: entry.heading | escape }}
+                  </a>
+                </h3>
+              {%- endif -%}
+              {%- assign summary = entry.excerpt | default: entry.description | default: entry.content -%}
+              {%- if summary -%}
+                <p class="card__caption rte">{{ summary | strip_html | truncate: 120 }}</p>
+              {%- endif -%}
+              {%- if entry.system and entry.system.url -%}
+                <a class="button button--primary" href="{{ entry.system.url }}">{{ section.settings.button_label }}</a>
+              {%- endif -%}
+            </div>
+          </article>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- else -%}
+    <div class="content-container">
+      <p>{{ 'No entries found.' }}</p>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Ưu đãi - Danh sách (Metaobject)",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Tiêu đề",
+      "default": "Ưu đãi"
+    },
+    {
+      "type": "text",
+      "id": "metaobject_type",
+      "label": "Metaobject type handle",
+      "default": "uu_dai",
+      "info": "Handle của metaobject (ví dụ: uu_dai)"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Nhãn nút",
+      "default": "Xem chi tiết"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Số mục hiển thị",
+      "min": 1,
+      "max": 48,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Cột desktop",
+      "options": [
+        { "value": 3, "label": "3" },
+        { "value": 4, "label": "4" }
+      ],
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Cột mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding trên",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding dưới",
+      "default": 28
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ưu đãi - Danh sách (Metaobject)",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+
