@@ -38,7 +38,7 @@
         "featured_collection_7zcTg8": {
           "type": "featured_collection",
           "settings": {
-            "collection": "blended-whisky"
+            "collection": "whisky"
           }
         },
         "featured_collection_LD3xNR": {
@@ -50,13 +50,13 @@
         "featured_collection_hA8kdN": {
           "type": "featured_collection",
           "settings": {
-            "collection": "frontpage"
+            "collection": "cognac"
           }
         },
         "featured_collection_PBKhgh": {
           "type": "featured_collection",
           "settings": {
-            "collection": "liqueur-tequila-1"
+            "collection": "liqueur-tequila"
           }
         },
         "featured_collection_qyAAw8": {
@@ -82,7 +82,7 @@
           "type": "featured_collection",
           "disabled": true,
           "settings": {
-            "collection": "rượu-sữa-1"
+            "collection": "rượu-sữa"
           }
         },
         "featured_collection_7bXn97": {
@@ -96,7 +96,7 @@
           "type": "featured_collection",
           "disabled": true,
           "settings": {
-            "collection": "rượu-sữa"
+            "collection": "gift-sets"
           }
         },
         "featured_collection_9UYwnc": {

@@ -29,13 +29,13 @@
         "featured_collection_CgciLp": {
           "type": "featured_collection",
           "settings": {
-            "collection": "vang-dỏ"
+            "collection": "red-wines"
           }
         },
         "featured_collection_j7Etdp": {
           "type": "featured_collection",
           "settings": {
-            "collection": "vang-trắng"
+            "collection": "white-wines"
           }
         },
         "featured_collection_XhexMb": {
@@ -47,7 +47,7 @@
         "featured_collection_mcdtKL": {
           "type": "featured_collection",
           "settings": {
-            "collection": "vang-bịch"
+            "collection": "boxed-wines"
           }
         }
       },
