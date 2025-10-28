@@ -31,86 +31,87 @@
 {% endschema %}
 
 <style>
-  .site-footer {
-    background-color: rgb(66, 0, 0);
-    color: white;
-  }
-
-  .site-footer a {
-    color: white;
-  }
-
-  .site-footer a:hover {
-    text-decoration: underline;
-  }
-
-  .footer-container h4 {
-    color: white;
-  }
-
-  .social-icons a svg {
-    fill: white;
-    transition: fill 0.3s ease;
-  }
-
-  @media (max-width: 768px) {
-    .footer-container {
-      grid-template-columns: 1fr !important;
-      gap: 1.5rem !important;
-      padding: 30px 16px !important;
+    .site-footer {
+      background-color: rgb(66, 0, 0);
+      color: white;
     }
 
-    .footer-container > div {
-      margin-bottom: 20px;
+    .site-footer a {
+      color: white;
     }
 
-    .social-icons {
-      justify-content: start;
-      flex-wrap: wrap;
-      gap: 12px;
+    .site-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-container h4 {
+      color: white;
     }
 
     .social-icons a svg {
-      width: 22px;
-      height: 22px;
+      fill: white;
+      transition: fill 0.3s ease;
     }
+
+    @media (max-width: 768px) {
+      .footer-container {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+        padding: 30px 16px !important;
+      }
+
+      .footer-container > div {
+        margin-bottom: 20px;
+      }
+
+      .social-icons {
+        justify-content: start;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .social-icons a svg {
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    .social-icons a[aria-label="Facebook"]:hover svg { fill: #1877F2; }
+    .social-icons a[aria-label="Instagram"]:hover svg { fill: #E1306C; }
+    .social-icons a[aria-label="TikTok"]:hover svg { fill: rgb(0, 0, 0); }
+    .social-icons a[aria-label="LinkedIn"]:hover svg { fill: #0A66C2; }
+    .social-icons a[aria-label="YouTube"]:hover svg { fill: #FF0000; }
+
+  .compliance-notice {
+    padding: 5px 20px 40px; /* top 20px, left/right 20px, bottom 30px */
+    text-align: justify;
+    font-size: 12px;
+    line-height: 1.6;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    {% comment %} max-width: 900px; {% endcomment %}
+    margin: 0 auto; /* centered */
+    background: black !important;
   }
 
-  .social-icons a[aria-label="Facebook"]:hover svg { fill: #1877F2; }
-  .social-icons a[aria-label="Instagram"]:hover svg { fill: #E1306C; }
-  .social-icons a[aria-label="TikTok"]:hover svg { fill: rgb(0, 0, 0); }
-  .social-icons a[aria-label="LinkedIn"]:hover svg { fill: #0A66C2; }
-  .social-icons a[aria-label="YouTube"]:hover svg { fill: #FF0000; }
-
-.compliance-notice {
-  padding: 5px 20px 40px; /* top 20px, left/right 20px, bottom 30px */
-  text-align: center;
-  font-size: 12px;
-  line-height: 1.6;
-  color: white;
-  width: 100%;
-  box-sizing: border-box;
-  {% comment %} max-width: 900px; {% endcomment %}
-  margin: 0 auto; /* centered */
-  background: black !important;
-}
-
-}
-.compliance-notice strong {
-  display: block;
-  margin-top: 8px;
-}
-.footer-info-company {
-  text-align: center;
-  padding: 10px 0px 40px 0px;
-  margin: 0px;
-  /* background: linear-gradient(rgb(0, 0, 0) 77%, #fdbb2d 50%); */
-  /* background-repeat: no-repeat; */
-  background: linear-gradient(to bottom, #2b0000, transparent);
-}
-.custom-info {
-  margin: 0px;
-}
+  }
+  .compliance-notice strong {
+    display: block;
+    margin-top: 8px;
+    text-align: center;
+  }
+  .footer-info-company {
+    text-align: center;
+    padding: 10px 0px 40px 0px;
+    margin: 0px;
+    /* background: linear-gradient(rgb(0, 0, 0) 77%, #fdbb2d 50%); */
+    /* background-repeat: no-repeat; */
+    background: linear-gradient(to bottom, #2b0000, transparent);
+  }
+  .custom-info {
+    margin: 0px;
+  }
 </style>
 
 <footer class="site-footer" style="padding-bottom: 0;">
@@ -128,32 +129,41 @@
       <span><strong>Địa chỉ:</strong> 80/59/116 Dương Quảng Hàm, Phường An Nhơn, TP. Hồ Chí Minh, Việt Nam</span><br>
       <span><strong>MST:</strong> 0319047595</span><br>
       <span><strong>Điện thoại:</strong> 0354160919</span><br>
-      <span><strong>Email:</strong> 
-        <a href="mailto:marketing@goldenwine.vn" style="text-decoration: none;">marketing@goldenwine.vn</a>
-      </span><br>
-      {% comment %} <p><strong>Số ĐKKD:</strong> 0319047595</p>
-      <p>Giấy phép bán lẻ rượu số 43/GP - KTHTĐT</p>
-      <p>Do Uỷ Ban Nhân Dân Phường An Nhơn ký ngày 22/08/2025 có thời hạn tới 22/08/2030</p>
-      <p><strong>Địa chỉ:</strong> 80/59/116 Dương Quảng Hàm, Phường An Nhơn, TP. Hồ Chí Minh, Việt Nam</p>
-      <p><strong>Điện thoại:</strong> 0354160919</p> {% endcomment %}
-      {% comment %} <p> 
-        <strong>Email:</strong>
-        <a href="mailto:marketing@goldenwine.vn" style="text-decoration: none;">marketing@goldenwine.vn</a>
-      </p> {% endcomment %}
+      <span
+        ><strong>Email:</strong>
+        <a href="mailto:marketing@goldenwine.vn" style="text-decoration: none;">marketing@goldenwine.vn</a> </span
+      ><br>
+      {% comment %}
+        <p><strong>Số ĐKKD:</strong> 0319047595</p>
+        <p>Giấy phép bán lẻ rượu số 43/GP - KTHTĐT</p>
+        <p>Do Uỷ Ban Nhân Dân Phường An Nhơn ký ngày 22/08/2025 có thời hạn tới 22/08/2030</p>
+        <p><strong>Địa chỉ:</strong> 80/59/116 Dương Quảng Hàm, Phường An Nhơn, TP. Hồ Chí Minh, Việt Nam</p>
+        <p><strong>Điện thoại:</strong> 0354160919</p>
+      {% endcomment %}
+      {% comment %}
+        <p>
+          <strong>Email:</strong>
+          <a href="mailto:marketing@goldenwine.vn" style="text-decoration: none;">marketing@goldenwine.vn</a>
+        </p>
+      {% endcomment %}
       {% comment %} <p><strong>Mã số thuế:</strong> 0319047595</p> {% endcomment %}
       <p>
         <span>Giấy phép bán lẻ rượu số 43/GP - KTHTĐT</span><br>
         <span>Do Uỷ Ban Nhân Dân Phường An Nhơn, TP. Hồ Chí Minh ký ngày 22/08/2025 có thời hạn tới 22/08/2030</span>
       </p>
       <p>
-        <small><i>Uống nhiều rượu bia gây ảnh hưởng xấu tới sức khỏe, có thể làm mất khả năng nhận thức và gây nguy hiểm tới cộng đồng. Hãy uống rượu bia có trách nhiệm.</i></small>
+        <small
+          ><i
+            >Uống nhiều rượu bia gây ảnh hưởng xấu tới sức khỏe, có thể làm mất khả năng nhận thức và gây nguy hiểm tới
+            cộng đồng. Hãy uống rượu bia có trách nhiệm.</i
+          ></small
+        >
       </p>
-
     </div>
 
     <!-- Column 2: Quick Links -->
     <div>
-       <div class="footer-info-company">
+      <div class="footer-info-company">
         <h4 class="custom-info">CHÍNH SÁCH</h4>
       </div>
       {% comment %} <h4 style="font-weight: bold; margin-bottom: 10px; font-size: 24px">LIÊN KẾT</h4> {% endcomment %}
@@ -196,28 +206,32 @@
         </a>
       </div>
     </div>
-    {% comment %} <!-- Column 3: Map -->
-    <div>
-      <h4 style="font-weight: bold; margin-bottom: 10px; font-size: 24px;">BẢN ĐỒ LIÊN HỆ</h4>
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31349.48277430003!2d106.64593633127278!3d10.835374116273272!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529078b51e6eb%3A0x28bd5bd9f01a1edc!2sGo%20Vap%2C%20Ho%20Chi%20Minh%20City%2C%20Vietnam!5e0!3m2!1sen!2s!4v1754128856519!5m2!1sen!2s"
-        width="100%"
-        height="250"
-        frameborder="0"
-        style="border:0;"
-        allowfullscreen
-      ></iframe>
-    </div> {% endcomment %}
+    {% comment %}
+      <!-- Column 3: Map -->
+      <div>
+        <h4 style="font-weight: bold; margin-bottom: 10px; font-size: 24px;">BẢN ĐỒ LIÊN HỆ</h4>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31349.48277430003!2d106.64593633127278!3d10.835374116273272!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529078b51e6eb%3A0x28bd5bd9f01a1edc!2sGo%20Vap%2C%20Ho%20Chi%20Minh%20City%2C%20Vietnam!5e0!3m2!1sen!2s!4v1754128856519!5m2!1sen!2s"
+          width="100%"
+          height="250"
+          frameborder="0"
+          style="border:0;"
+          allowfullscreen
+        ></iframe>
+      </div>
+    {% endcomment %}
   </div>
 
   <!-- Compliance Notice -->
   <div class="compliance-notice">
-    Tuân thủ điều 16 của Luật Phòng, chống tác hại của rượu, bia số 44/2019/QH14 do Quốc Hội ban hành ngày 14 tháng 06 năm 2019 về Điều kiện bán rượu, bia theo hình thức thương mại điện tử. 
-    Nghị định số 24/2020/NĐ-CP quy định chi tiết một số điều của Luật Phòng, chống tác hại của rượu về kinh doanh bán hàng qua mạng. 
-    Vui lòng đến trực tiếp các cửa hàng hoặc gọi tới số hotline để được tư vấn (giá trên website chỉ mang tính chất tham khảo). 
-    Cam kết có trách nhiệm, đồng ý với các điều khoản của trang web này. 
-    Nội dung này dành cho những người trong độ tuổi uống rượu hợp pháp, vui lòng không chia sẻ hoặc chuyển tiếp cho bất kỳ ai chưa đủ tuổi vị thành niên.
-    <br><strong>THƯỞNG THỨC RƯỢU CÓ TRÁCH NHIỆM</strong>
+    Tuân thủ điều 16 của Luật Phòng, chống tác hại của rượu, bia số 44/2019/QH14 do Quốc Hội ban hành ngày 14 tháng 06
+    năm 2019 về Điều kiện bán rượu, bia theo hình thức thương mại điện tử. Nghị định số 24/2020/NĐ-CP quy định chi tiết
+    một số điều của Luật Phòng, chống tác hại của rượu về kinh doanh bán hàng qua mạng. Vui lòng đến trực tiếp các cửa
+    hàng hoặc gọi tới số hotline để được tư vấn (giá trên website chỉ mang tính chất tham khảo). Cam kết có trách nhiệm,
+    đồng ý với các điều khoản của trang web này. Nội dung này dành cho những người trong độ tuổi uống rượu hợp pháp, vui
+    lòng không chia sẻ hoặc chuyển tiếp cho bất kỳ ai chưa đủ tuổi vị thành niên.
+    <br>
+    <strong>THƯỞNG THỨC RƯỢU CÓ TRÁCH NHIỆM</strong>
     <strong>SẢN PHẨM RƯỢU KHÔNG BÁN CHO NGƯỜI DƯỚI 18 TUỔI VÀ PHỤ NỮ MANG THAI</strong>
     <strong>KHÔNG LÁI XE KHI ĐÃ UỐNG RƯỢU BIA</strong>
   </div>
