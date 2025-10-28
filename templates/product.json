@@ -20,14 +20,6 @@
           "type": "price",
           "settings": {}
         },
-        "custom_liquid_qYUq3p": {
-          "type": "custom_liquid",
-          "name": "Table",
-          "disabled": true,
-          "settings": {
-            "custom_liquid": "<table style=\"width: 100%; border-collapse: collapse; font-family: sans-serif; font-size: 15px;\">\n  <tbody>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Xuất xứ</td>\n      <td style=\"padding: 8px;\">Scotland</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Thương hiệu</td>\n      <td style=\"padding: 8px;\">Aberlour</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Nồng độ</td>\n      <td style=\"padding: 8px;\">40.0%</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Phân loại</td>\n      <td style=\"padding: 8px;\">Whisky</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Vùng</td>\n      <td style=\"padding: 8px;\">Speyside</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Hương vị</td>\n      <td style=\"padding: 8px;\">Hòa quyện giữa kẹo bơ, trái cây chín, vani và gỗ sồi, kết thúc với chút cay nhẹ của quế.</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Thức ăn kèm</td>\n      <td style=\"padding: 8px;\">Chocolate đen, thịt đỏ, phô mai lâu năm</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Dung tích</td>\n      <td style=\"padding: 8px;\">700ml</td>\n    </tr>\n    <tr>\n      <td style=\"padding: 8px; font-weight: bold;\">Tuổi rượu</td>\n      <td style=\"padding: 8px;\">12 năm</td>\n    </tr>\n  </tbody>\n</table>"
-          }
-        },
         "description_iirdGV": {
           "type": "description",
           "settings": {}
@@ -61,7 +53,6 @@
       "block_order": [
         "title",
         "price",
-        "custom_liquid_qYUq3p",
         "description_iirdGV",
         "variant_picker",
         "quantity_selector",
