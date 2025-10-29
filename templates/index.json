@@ -88,78 +88,19 @@
         "accessibility_info": ""
       }
     },
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Chào mừng đến với Siêu Thị Rượu chính hãng",
-            "heading_add_2": "Image banner",
-            "heading_style": "",
-            "subheading": "Your sub heading here",
-            "subheading_style": "",
-            "heading_size": "h1"
-          }
-        },
-        "text_4eMFE4": {
-          "type": "text",
-          "settings": {
-            "text": "Chúng tôi tự hào mang đến cho bạn trải nghiệm mua sắm rượu trực tuyến tuyệt vời nhất. Với danh mục sản phẩm đa dạng, từ rượu vang, rượu mạnh đến các loại rượu đặc biệt, mọi sản phẩm đều được đảm bảo chất lượng và nguồn gốc rõ ràng.Chúng tôi cam kết cung cấp dịch vụ chăm sóc khách hàng chu đáo, luôn sẵn sàng hỗ trợ bạn trong suốt quá trình mua sắm. Hãy để chúng tôi đồng hành cùng bạn trong những khoảnh khắc đặc biệt với những chai rượu tuyệt hảo nhất!",
-            "text_style": "body"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Mua Ngay",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text_4eMFE4",
-        "button"
-      ],
-      "disabled": true,
-      "settings": {
-        "image": "shopify://shop_images/a_bottle_of_white_image.jpg",
-        "image_overlay_opacity": 40,
-        "image_height": "medium",
-        "image_behavior": "none",
-        "desktop_content_position": "middle-left",
-        "desktop_content_alignment": "left",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
     "collection_list_xAfCPi": {
       "type": "collection-list",
       "blocks": {
-        "featured_collection_38RFic": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "loại-rượu"
-          }
-        },
-        "featured_collection_Yb9WKw": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "champagne"
-          }
-        },
         "featured_collection_RatBAp": {
           "type": "featured_collection",
           "settings": {
             "collection": "whisky"
+          }
+        },
+        "featured_collection_fwtC6c": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "cognac"
           }
         },
         "featured_collection_Le97ha": {
@@ -168,10 +109,16 @@
             "collection": "vodka"
           }
         },
-        "featured_collection_fwtC6c": {
+        "featured_collection_Yb9WKw": {
           "type": "featured_collection",
           "settings": {
-            "collection": "cognac"
+            "collection": "champagne"
+          }
+        },
+        "featured_collection_38RFic": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "loại-rượu"
           }
         },
         "featured_collection_FpqRyp": {
@@ -194,11 +141,11 @@
         }
       },
       "block_order": [
-        "featured_collection_38RFic",
-        "featured_collection_Yb9WKw",
         "featured_collection_RatBAp",
-        "featured_collection_Le97ha",
         "featured_collection_fwtC6c",
+        "featured_collection_Le97ha",
+        "featured_collection_Yb9WKw",
+        "featured_collection_38RFic",
         "featured_collection_FpqRyp",
         "featured_collection_GHGccq",
         "featured_collection_WR6DTM"
@@ -219,23 +166,6 @@
     },
     "image_banner_fA3DrH": {
       "type": "image-banner",
-      "blocks": {
-        "buttons_YwQE68": {
-          "type": "buttons",
-          "disabled": true,
-          "settings": {
-            "button_label_1": "Click here",
-            "button_link_1": "shopify://collections/whisky",
-            "button_style_secondary_1": true,
-            "button_label_2": "Click here",
-            "button_link_2": "shopify://collections/vang-tay-ban-nha",
-            "button_style_secondary_2": true
-          }
-        }
-      },
-      "block_order": [
-        "buttons_YwQE68"
-      ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/sub-banner-1.png",
@@ -444,7 +374,7 @@
         "paragraph_iXRw7d": {
           "type": "paragraph",
           "settings": {
-            "text": "<h5>Nhận thông tin cập nhật, thông báo về sản phẩm mới và các ưu đãi đặc biệt.<br/>Vui lòng xem chính sách bảo mật của chúng tôi để biết chi tiết về cách chúng tôi sử dụng dữ liệu cá nhân của bạn.</h5>"
+            "text": "<h4>Nhận thông tin cập nhật, thông báo về sản phẩm mới và các ưu đãi đặc biệt.<br/>Vui lòng xem chính sách bảo mật của chúng tôi để biết chi tiết về cách chúng tôi sử dụng dữ liệu cá nhân của bạn.</h4>"
           }
         },
         "email_form_Cx773A": {
@@ -468,7 +398,6 @@
   },
   "order": [
     "slideshow_G9TWwq",
-    "image_banner",
     "collection_list_xAfCPi",
     "image_banner_fA3DrH",
     "featured_collection",
