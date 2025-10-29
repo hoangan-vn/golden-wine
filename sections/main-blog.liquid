@@ -7,25 +7,6 @@
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
-  .section-{{ section.id }}-padding .blog-articles .article .card__media {
-    position: relative !important;
-    display: block !important;
-    overflow: hidden !important;
-    aspect-ratio: 16 / 9 !important;
-  }
-
-  .section-{{ section.id }}-padding .blog-articles .article .card__media img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    transform: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
 
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
@@ -35,6 +16,11 @@
 
     .section-{{ section.id }}-padding .blog-articles:not(.blog-articles--collage) {
       grid-template-columns: repeat(3, 1fr);
+    }
+    .section-{{ section.id }}-padding .blog-articles:not(.blog-articles--collage) .article .card__media {
+        margin-left: calc(-1 * var(--card-image-padding));
+        margin-right: calc(-1 * var(--card-image-padding));
+        margin-top: calc(-1 * var(--card-image-padding));
     }
     
   }
@@ -64,11 +50,11 @@
           {%- render 'article-card',
             article: article,
             media_height: section.settings.image_height,
-          	media_aspect_ratio: article.image.aspect_ratio,
-          	show_image: section.settings.show_image,
-          	show_date: section.settings.show_date,
-          	show_author: section.settings.show_author,
-          	show_excerpt: true
+            media_aspect_ratio: article.image.aspect_ratio,
+            show_image: section.settings.show_image,
+            show_date: section.settings.show_date,
+            show_author: section.settings.show_author,
+            show_excerpt: true
           -%}
         </div>
       {%- endfor -%}
