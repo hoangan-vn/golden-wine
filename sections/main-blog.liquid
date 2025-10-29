@@ -8,23 +8,21 @@
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
   .section-{{ section.id }}-padding .blog-articles .article .card__media {
-    position: relative;
-    display: block;
-    overflow: hidden;
-    aspect-ratio: 16 / 9; 
+    position: relative !important;
+    display: block !important;
+    overflow: hidden !important;
+    aspect-ratio: 16 / 9 !important;
   }
 
-.section-{{ section.id }}-padding .blog-articles .article .card__media > * {
-    position: absolute !important;
-    min-width: 100% !important; 
-    min-height: 100% !important;
-    width: auto;
-    height: auto;
+  .section-{{ section.id }}-padding .blog-articles .article .card__media img {
+    width: 100% !important;
+    height: 100% !important;
     object-fit: cover !important;
     object-position: center !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
     margin: 0 !important;
     padding: 0 !important;
   }
