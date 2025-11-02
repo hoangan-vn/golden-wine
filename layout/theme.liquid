@@ -1,25 +1,48 @@
 <!doctype html>
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
-    
-    <link rel="preload" href="https://cdn.shopify.com/s/files/1/0952/5248/0281/files/BT-BeauSans-Medium.woff2?v=1754105754" as="font" type="font/woff2" crossorigin="anonymous">
+    <link
+      rel="preload"
+      href="https://cdn.shopify.com/s/files/1/0952/5248/0281/files/BT-BeauSans-Medium.woff2?v=1754105754"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    >
 
-<style>
-@font-face {
-  font-family: 'BT BeauSans Medium';
-  src: url('https://cdn.shopify.com/s/files/1/0952/5248/0281/files/BT-BeauSans-Medium.woff2?v=1754105754') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
+    <style>
+      @font-face {
+        font-family: 'BT BeauSans Medium';
+        src: url('https://cdn.shopify.com/s/files/1/0952/5248/0281/files/BT-BeauSans-Medium.woff2?v=1754105754')
+          format('woff2');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
 
-h1, h2, h3, h4, h5, h6,
-p, span, div, ul, ol, li,
-a, button, input, select,
-option, label, legend, textarea, small {
-  font-family: 'Times New Roman', Times, serif !important;
-}
-</style>
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      span,
+      div,
+      ul,
+      ol,
+      li,
+      a,
+      button,
+      input,
+      select,
+      option,
+      label,
+      legend,
+      textarea,
+      small {
+        font-family: 'Times New Roman', Times, serif !important;
+      }
+    </style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -396,238 +419,239 @@ option, label, legend, textarea, small {
 
     {% section 'vertical-sticky-bar' %}
 
-<!-- Age Verification Overlay -->
-<div id="age-gate">
-  <div class="age-overlay">
-    <!-- Logo -->
-    {% comment %} <img src="https://cdn.shopify.com/s/files/1/0952/5248/0281/files/Golden_Wine_Logo.png?v=1753777433" alt="Logo" class="age-logo" /> {% endcomment %}
-     <img src="https://cdn.shopify.com/s/files/1/0952/5248/0281/files/z6963963654724_d7cca33c56af4239863d4a38548e1334.jpg?v=1756696882" class="age-logo-custom"  />
+    <!-- Age Verification Overlay -->
+    <div id="age-gate">
+      <div class="age-overlay">
+        <!-- Logo -->
+        {% comment %} <img src="https://cdn.shopify.com/s/files/1/0952/5248/0281/files/Golden_Wine_Logo.png?v=1753777433" alt="Logo" class="age-logo" /> {% endcomment %}
+        <img
+          src="https://cdn.shopify.com/s/files/1/0952/5248/0281/files/logo_spring.jpg?v=1756696882"
+          class="logo-golden-wine"
+        >
 
-    <h1>{{ 'age_gate.title' | t }}</h1>
-    <p>{{ 'age_gate.description' | t }}<br>
-    </p>
+        <h1>{{ 'age_gate.title' | t }}</h1>
+        <p>
+          {{ 'age_gate.description' | t -}}
+          <br>
+        </p>
 
-    <div class="age-buttons">
-      <button class="btn-confirm" onclick="confirmAge()">{{ 'age_gate.confirm_button' | t }}</button>
-      <button class="btn-deny" onclick="denyAge()">{{ 'age_gate.deny_button' | t }}</button>
+        <div class="age-buttons">
+          <button class="btn-confirm" onclick="confirmAge()">{{ 'age_gate.confirm_button' | t }}</button>
+          <button class="btn-deny" onclick="denyAge()">{{ 'age_gate.deny_button' | t }}</button>
+        </div>
+
+        <div id="age-warning" class="age-warning">{{ 'age_gate.warning' | t }}</div>
+
+        {% comment %}
+          {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+            <localization-form class="small-hide medium-hide" data-prevent-hide>
+              {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+                <div>
+                  <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                  {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
+                </div>
+              {%- endform -%}
+            </localization-form>
+          {%- endif -%}
+        {% endcomment %}
+        {%- if localization.available_languages.size > 1 -%}
+          <localization-form class="medium-hide" data-prevent-hide>
+            {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+              <div>
+                <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
+              </div>
+            {%- endform -%}
+          </localization-form>
+        {%- endif -%}
+      </div>
     </div>
 
-    <div id="age-warning" class="age-warning">{{ 'age_gate.warning' | t }}</div>
+    <style>
+      .age-logo-custom {
+        width: 170px;
+        {% comment %} height: 130px; {% endcomment %}
+        border-radius: 30px;
+        box-shadow: 0 0px 10px 5px;
+      }
+      #age-gate {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        {% comment %} background: url('https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center / cover; {% endcomment %}
+        background: url('https://cdn.shopify.com/s/files/1/0952/5248/0281/files/toast-9278630.png?v=1756362180') no-repeat center center / cover;
+        {% comment %} background: url('https://drive.google.com/uc?export=view&id=1VW8Ui46oOD-1F3ikrYhWNJEY5v-acy1u'); {% endcomment %}
 
-    {% comment %} {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
-      <localization-form class="small-hide medium-hide" data-prevent-hide>
-        {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
-          <div>
-            <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
-            {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
-          </div>
-        {%- endform -%}
-      </localization-form>
-    {%- endif -%} {% endcomment %}
-    {%- if localization.available_languages.size > 1 -%}
-      <localization-form class="medium-hide" data-prevent-hide>
-        {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
-          <div>
-            <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
-            {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
-          </div>
-        {%- endform -%}
-      </localization-form>
-    {%- endif -%}
+        backdrop-filter: blur(6px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Times New Roman', Times, serif !important;
+      }
 
-  </div>
-</div>
+      .age-overlay {
+        background-color: rgba(0, 0, 0, 0.85);
+        padding: 3rem 2rem;
+        width: 450px;
+        border-radius: 12px;
+        text-align: center;
+        color: #f5f5f5;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        animation: fadeIn 0.4s ease-in-out;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
 
-<style>
-  .age-logo-custom {
-    width: 170px;
-    {% comment %} height: 130px; {% endcomment %}
-    border-radius: 30px;
-    box-shadow: 0 0px 10px 5px;
-  }
-  #age-gate {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    {% comment %} background: url('https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center / cover; {% endcomment %}
-    background: url('https://cdn.shopify.com/s/files/1/0952/5248/0281/files/toast-9278630.png?v=1756362180') no-repeat center center / cover;
-    {% comment %} background: url('https://drive.google.com/uc?export=view&id=1VW8Ui46oOD-1F3ikrYhWNJEY5v-acy1u'); {% endcomment %}
+      .age-logo {
+        max-width: 80px;
+        margin-bottom: 1.5rem;
+      }
 
-    backdrop-filter: blur(6px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Times New Roman', Times, serif !important;
-  }
+      .age-overlay h1 {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+        color: #e0b973;
+        letter-spacing: 1px;
+      }
 
-  .age-overlay {
-    background-color: rgba(0, 0, 0, 0.85);
-    padding: 3rem 2rem;
-    width: 450px;
-    border-radius: 12px;
-    text-align: center;
-    color: #f5f5f5;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-    animation: fadeIn 0.4s ease-in-out;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+      .age-overlay p {
+        font-size: 1.5rem;
+        margin-bottom: 2.5rem;
+        line-height: 1.9;
+        color: #ddd;
+      }
 
-  .age-logo {
-    max-width: 80px;
-    margin-bottom: 1.5rem;
-  }
+      .age-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
 
-  .age-overlay h1 {
-    font-size: 2.8rem;
-    margin-bottom: 1rem;
-    color: #e0b973;
-    letter-spacing: 1px;
-  }
+      .age-buttons button {
+        padding: 16px 32px;
+        font-size: 1.3rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 180px;
+        text-transform: uppercase;
+      }
 
-  .age-overlay p {
-    font-size: 1.5rem;
-    margin-bottom: 2.5rem;
-    line-height: 1.9;
-    color: #ddd;
-  }
+      .btn-confirm {
+        background-color: #8b0000;
+        color: #fff;
+      }
 
-  .age-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
+      .btn-confirm:hover {
+        background-color: #a40000;
+      }
 
-  .age-buttons button {
-    padding: 16px 32px;
-    font-size: 1.3rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 180px;
-    text-transform: uppercase;
-  }
+      .btn-deny {
+        background-color: #555;
+        color: #fff;
+      }
 
-  .btn-confirm {
-    background-color: #8b0000;
-    color: #fff;
-  }
+      .btn-deny:hover {
+        background-color: #444;
+      }
 
-  .btn-confirm:hover {
-    background-color: #a40000;
-  }
+      .age-warning {
+        display: none;
+        margin-top: 2rem;
+        color: #ff5e5e;
+        font-weight: bold;
+        font-size: 1.3rem;
+      }
 
-  .btn-deny {
-    background-color: #555;
-    color: #fff;
-  }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+      }
 
-  .btn-deny:hover {
-    background-color: #444;
-  }
+      @media (max-width: 480px) {
+        .age-overlay {
+          width: 90%;
+          padding: 2.5rem 1.2rem;
+          font-size: 1.2rem;
+        }
 
-  .age-warning {
-    display: none;
-    margin-top: 2rem;
-    color: #ff5e5e;
-    font-weight: bold;
-    font-size: 1.3rem;
-  }
+        .age-buttons button {
+          width: 100%;
+        }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
+        .age-overlay h1 {
+          font-size: 2.2rem;
+        }
 
-  @media (max-width: 480px) {
-    .age-overlay {
-      width: 90%;
-      padding: 2.5rem 1.2rem;
-      font-size: 1.2rem;
-    }
+        .age-overlay p {
+          font-size: 1.3rem;
+        }
 
-    .age-buttons button {
-      width: 100%;
-    }
+        .age-logo {
+          max-width: 70px;
+        }
+      }
+    </style>
 
-    .age-overlay h1 {
-      font-size: 2.2rem;
-    }
+    <script>
+        {% comment %} function confirmAge() {
+          localStorage.setItem('ageVerified', 'true');
+          document.getElementById('age-gate').style.display = 'none';
+        }
 
-    .age-overlay p {
-      font-size: 1.3rem;
-    }
+        function denyAge() {
+          document.getElementById('age-warning').style.display = 'block';
+        }
 
-    .age-logo {
-      max-width: 70px;
-    }
-  }
-</style>
+        document.addEventListener("DOMContentLoaded", function () {
+          if (localStorage.getItem('ageVerified') === 'true') {
+            document.getElementById('age-gate').style.display = 'none';
+          }
+        }); {% endcomment %}
+        function confirmAge() {
+        sessionStorage.setItem('ageVerified', 'true');
+        document.getElementById('age-gate').style.display = 'none';
+        }
 
+        function denyAge() {
+        document.getElementById('age-warning').style.display = 'block';
+        }
 
+        document.addEventListener("DOMContentLoaded", function () {
+        if (sessionStorage.getItem('ageVerified') === 'true') {
+          document.getElementById('age-gate').style.display = 'none';
+        } else {
+          document.getElementById('age-gate').style.display = 'block';
+        }
+      });
+    </script>
 
+    <style>
+      [id*='section'][id*='image'] {
+        max-width: 98% !important;
+        width: 100% !important;
+        margin: 20px auto !important; /* top margin for desktop */
+        border-radius: 12px; /* rounded corners for desktop */
+        overflow: hidden;
+      }
 
-<script>
-  {% comment %} function confirmAge() {
-    localStorage.setItem('ageVerified', 'true');
-    document.getElementById('age-gate').style.display = 'none';
-  }
+      @media (max-width: 749px) {
+        [id*='section'][id*='image'] {
+          max-width: 100%;
+          margin-top: 0 !important; /* remove top margin on mobile */
+          border-radius: 0; /* no rounded corners on mobile */
+        }
+      }
 
-  function denyAge() {
-    document.getElementById('age-warning').style.display = 'block';
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    if (localStorage.getItem('ageVerified') === 'true') {
-      document.getElementById('age-gate').style.display = 'none';
-    }
-  }); {% endcomment %}
-  function confirmAge() {
-  sessionStorage.setItem('ageVerified', 'true');
-  document.getElementById('age-gate').style.display = 'none';
-  }
-
-  function denyAge() {
-  document.getElementById('age-warning').style.display = 'block';
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-  if (sessionStorage.getItem('ageVerified') === 'true') {
-    document.getElementById('age-gate').style.display = 'none';
-  } else {
-    document.getElementById('age-gate').style.display = 'block';
-  }
-});
-
-</script>
-  
-  <style>
-[id*='section'][id*='image'] {
-    max-width: 98% !important;
-    width: 100% !important;
-    margin: 20px auto !important; /* top margin for desktop */
-    border-radius: 12px; /* rounded corners for desktop */
-    overflow: hidden;
-}
-
-@media (max-width: 749px) {
-    [id*='section'][id*='image'] {
-        max-width: 100%;
-        margin-top: 0 !important; /* remove top margin on mobile */
-        border-radius: 0; /* no rounded corners on mobile */
-    }
-}
-
-[id*='section'][id*='image'] img {
-    border-radius: inherit;
-}
-</style>
-
+      [id*='section'][id*='image'] img {
+        border-radius: inherit;
+      }
+    </style>
   </body>
 </html>
