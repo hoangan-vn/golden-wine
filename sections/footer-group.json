@@ -30,13 +30,6 @@
             "link_url": "shopify://pages/quy-dịnh-sử-dụng"
           }
         },
-        "link_aafF89": {
-          "type": "link",
-          "settings": {
-            "link_text": "Chính sách giao hàng",
-            "link_url": ""
-          }
-        },
         "link_y4Q8Bi": {
           "type": "link",
           "name": "Chính sách giao hàng ",
@@ -61,13 +54,6 @@
             "link_url": "shopify://pages/chinh-sach-bảo-mật"
           }
         },
-        "link_KtBWpM": {
-          "type": "link",
-          "settings": {
-            "link_text": "Chính sách giao hàng",
-            "link_url": ""
-          }
-        },
         "link_qDUxeE": {
           "type": "link",
           "name": "Chính sách kiểm hàng và đổi trả",
@@ -75,25 +61,15 @@
             "link_text": "Chính sách kiểm hàng và đổi trả",
             "link_url": "shopify://pages/chinh-sach-kiểm-hang-va-dổi-trả"
           }
-        },
-        "link_a3Qx6U": {
-          "type": "link",
-          "settings": {
-            "link_text": "Tài khoản khách hàng",
-            "link_url": "shopify://pages/tai-khoản-khach-hang"
-          }
         }
       },
       "block_order": [
         "link_ekGT3C",
         "link_CerhFp",
-        "link_aafF89",
         "link_y4Q8Bi",
         "link_3YcNC7",
         "link_JVeKAB",
-        "link_KtBWpM",
-        "link_qDUxeE",
-        "link_a3Qx6U"
+        "link_qDUxeE"
       ],
       "name": "Custom Footer",
       "settings": {}

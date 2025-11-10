@@ -108,7 +108,7 @@
               {%- when 'price' -%}
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                   {%- if product.tags contains 'contact-price' -%}
-                    <span class="price--contact">Liên hệ</span>
+                    <span class="price--contact" style="color:#661313; font-weight:700; font-size:20px;">Liên hệ</span>
                   {%- else -%}
                   {%- render 'price',
                     product: product,
@@ -598,7 +598,7 @@
               {%- when 'buy_buttons' -%}
                 {%- if product.tags contains 'contact-price' -%}
                   <div class="product-form__buttons" {{ block.shopify_attributes }}>
-                    <a href="{{ routes.contact_url }}" class="button button--full-width">Liên hệ</a>
+                    <a href="https://zalo.me/0354160919" class="button button--full-width">Liên hệ</a>
                   </div>
                 {%- else -%}
                 {%- render 'buy-buttons',
